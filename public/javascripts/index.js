@@ -1,6 +1,7 @@
 // global properties, assigned with let for easy overriding by the user
 let disk;
 let tvOpen;
+let woodtakenOrShown, woodtakenOrShown1, woodtakenOrShown2, letterTaken, letterShown;
 
 // store user input history
 let inputs = [''];
@@ -137,6 +138,9 @@ let lookAt = (args) => {
 
   if (item) {
     // Look at an item.
+    if (item.img){
+      println(item.img, 'img');
+    }
     if (item.desc) {
       println(item.desc);
     } else {

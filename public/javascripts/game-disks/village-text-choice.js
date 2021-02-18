@@ -4,6 +4,34 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'muhtarBedroom',
+      name: 'Muhtar\'s Bedroom',
+      desc: `This is a dark room with no windows. 
+      There is a BED and a CHEST. 
+      DOOR leading to exit.`,
+      items: [
+        {
+          name: ['bed'],
+          onUse: () => println(`You don't feel sleepy now.`),
+        },
+        {
+          name: ['chest'],
+          onUse: () => println('Locked. You need key.') 
+        },
+        {
+          name: 'door',
+          desc: 'Door to exit.', // Displayed when the player looks at the item.
+          onUse: () => println('Type GO NORTH, to enter try quitting the bedroom.')
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'muhtarEv',
+        }
+      ],
+    },
+    {
       id: 'muhtarEv',
       name: 'Muhtar\'s House',
       desc: `A warm village house of two rooms. 
@@ -13,17 +41,22 @@ const village = {
       items: [
         {
           name: ['wardrobe'],
-          desc: 'An old wardrobe, probably filled with clothes and some paperwork of muhtar.', // Displayed when the player looks at the item.
+          desc: 'An old wardrobe, probably filled with clothes and some paperwork of muhtar. USE WARDROBE to open it.', // Displayed when the player looks at the item.
+          
           onUse: () => 
           {
-             
-            let papertaken;
-            if (papertaken) {
+            const wardrobe = getItemInRoom('wardrobe', 'muhtarEv');
+            if (letterTaken){
+              wardrobe.desc = `You opened it. There are clothes.`;
+            }else{
+              wardrobe.desc = `You opened it. There are clothes.
+              You see a PAPER.`
+              };
+              println(wardrobe.desc)
+            if (letterTaken || letterShown) {
               // the key is already in the pot or the player's inventory
-              return;
+              return ;
             };
-            println(`You opened it. There are clothes. And you see a PAPER.`)
-
             const muhtarEv = getRoom('muhtarEv');
 
             // put the silver key in the pot
@@ -46,17 +79,18 @@ const village = {
                 const paper = getItemInInventory('paper') || getItemInRoom('paper');
 
                 // let's also update the description
-                wood.desc = `Official paper.`;
+                paper.desc = `Official paper.`;
               },
               isTakeable: true,
               onTake: () => {
                 println(`You took it.`);
                 // update the monstera's description, removing everything starting at the line break
                 const wardrobe = getItemInRoom('wardrobe', 'muhtarEv');
-                wardrobe.desc = wardrobe.desc.slice(0, wardrobe.desc.indexOf('\n'));
-                papertaken = true;
+                wardrobe.desc = `You opened it. There are clothes.`;
+                letterTaken = true;
               },
             });
+            letterShown = true;
           },
         },
         {
@@ -77,14 +111,14 @@ const village = {
         {
           name: ['tv', 'television'],
           img: `
-           _______________
-          | /~~~~~~~~\ ||||
-          ||          |...|
-          ||          |   |
-          | \________/  O |
-           ~~~~~~~~~~~~~~~
-           `,
-          desc: 'An old TV. Yet nowadays no one has television except a lucky minority.', // Displayed when the player looks at the item.
+ ______________
+| /~~~~~~~~ ||||
+||          |..|
+||          |  |
+| ________ / O |
+ ~~~~~~~~~~~~~~~ `,
+          desc: `         
+          An old TV. Nowadays no one has television except a lucky minority.`, // Displayed when the player looks at the item.
           onUse: () => {
             
             if(tvOpen){
@@ -93,7 +127,7 @@ const village = {
               return;
             };
             tvOpen = true;
-            return println("Channel 1. This is the only channel since two years. Full of government propaganda.");
+            return println("You turned on the TV. Channel 1. This is the only channel since two years. Full of government propaganda.");
           },
         },
       ],
@@ -103,7 +137,7 @@ const village = {
           id: 'path-1',
         },
         {
-          dir: ['north','door','bedroom'],
+          dir: ['south','door','bedroom'],
           id: 'muhtarBedroom',
         },
       ],
@@ -258,14 +292,12 @@ const village = {
           It is closed with a WOOD.`, // Displayed when the player looks at the item.
           onUse: () => println(`Window is too small to pass through.`), // Called when the player uses the item.
           onLook: () => {
-            let woodtaken;
-            if (woodtaken) {
+            if (woodtakenOrShown) {
               // the key is already in the pot or the player's inventory
               return;
-            }
-
+            };
             const abandonedHouse = getRoom('abandonedHouse');
-
+            
             // put the silver key in the pot
             abandonedHouse.items.push({
               name: 'wood',
@@ -298,9 +330,9 @@ const village = {
                 // update the monstera's description, removing everything starting at the line break
                 const window = getItemInRoom('window', 'abandonedHouse');
                 window.desc = window.desc.slice(0, window.desc.indexOf('\n'));
-                woodtaken = true;
               },
             });
+            woodtakenOrShown = true;
           },
           
         },
@@ -326,18 +358,17 @@ const village = {
       name: 'Upstairs',
       desc: `This is the second floor.
       There are two broken windows. 
-      WINDOW ON WEST side and WINDOW ON EAST side.
+      WEST WINDOW and EAST WINDOW.
       Light enters from those windows.
       `,
       items: [
         {
-          name: ['broken window on west', 'window on west', 'west window'],
+          name: ['west window', 'west'],
           desc: `Broken on west side.
           It is closed with a WOOD.`, // Displayed when the player looks at the item.
           onUse: () => println(`Window is too small to pass through.`), // Called when the player uses the item.
           onLook: () => {
-            let woodtaken1;
-            if (woodtaken1) {
+            if (woodtakenOrShown1) {
               // the key is already in the pot or the player's inventory
               return;
             };
@@ -374,27 +405,27 @@ const village = {
               onTake: () => {
                 println(`You took it.`);
                 // update the monstera's description, removing everything starting at the line break
-                const windowOnWest = getItemInRoom('broken window on west', 'secondStairs');
+                const windowOnWest = getItemInRoom('west window', 'secondStairs');
                 windowOnWest.desc = windowOnWest.desc.slice(0, windowOnWest.desc.indexOf('\n'));
-                woodtaken1 = true;
               },
             });
+            woodtakenOrShown1 = true;
           },
           
         },
         {
-          name: ['broken window on east', 'window on east', 'east window'],
+          name: ['east window', 'east'],
           desc: `Broken on east side.
           It is closed with a WOOD.`, // Displayed when the player looks at the item.
           onUse: () => println(`Window is too small to pass through.`), // Called when the player uses the item.
           onLook: () => {
-            let woodtaken2;
-            if (woodtaken2) {
+
+            if (woodtakenOrShown2) {
               // the key is already in the pot or the player's inventory
               return;
             }
 
-            const scondStairs = getRoom('secondStairs');
+            const secondStairs = getRoom('secondStairs');
 
             // put the silver key in the pot
             secondStairs.items.push({
@@ -426,11 +457,12 @@ const village = {
               onTake: () => {
                 println(`You took it.`);
                 // update the monstera's description, removing everything starting at the line break
-                const windowOnEast = getItemInRoom('broken window on east', 'secondStairs');
-                windowOneast.desc = windowOneast.desc.slice(0, windowOneast.desc.indexOf('\n'));
-                woodtaken2 = true;
+                const windowOnEast = getItemInRoom('east window', 'secondStairs');
+                windowOnEast.desc = windowOnEast.desc.slice(0, windowOnEast.desc.indexOf('\n'));
               },
             });
+            woodtakenOrShown2 = true;
+
           },
           
         },
