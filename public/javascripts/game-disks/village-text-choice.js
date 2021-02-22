@@ -17,17 +17,17 @@ const village = {
         },
         {
           name: ['garden house','garden', 'house', 'abandoned house', 'abandoned'],
-          img: `                                           Art by Veronica Karlsson
-          ____||____
-         ///////////
-        ///////////  
-        |    _    |  |
-        |[] | | []|[]|
-        |   | |   |  |
-      ...................
-    ........................
-  ..................................
-          `,
+          img: `
+Art by Veronica Karlsson
+      ____||____
+     ///////////
+    ///////////  
+    |    _    |  |
+    |[] | | []|[]|
+    |   | |   |  |
+...................
+........................
+.............................`,
           desc: 'It is a big garden of an abandoned village house.', // Displayed when the player looks at the item.
           onUse: () => println(`Type GO SOUTH to enter garden.`), // Called when the player uses the item.
         },
