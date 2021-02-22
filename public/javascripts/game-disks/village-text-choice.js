@@ -4,6 +4,54 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'path-2',
+      name: 'Path',
+      desc: `It's the village path. On WEST and EAST direction. 
+      One side of the path [NORTH], is the MARKETPLACE.
+      Other side of the path [SOUTH] is an abandoned GARDEN HOUSE`,
+      items: [
+        {
+          name: ['Marketplace','bazaar', 'market'],
+          desc: 'Empty now. Marketplace only open on fridays.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to visit the marketplace.`), // Called when the player uses the item.
+        },
+        {
+          name: ['garden house','garden', 'house', 'abandoned house', 'abandoned'],
+          img: `                                           Art by Veronica Karlsson
+          ____||____
+         ///////////
+        ///////////  
+        |    _    |  |
+        |[] | | []|[]|
+        |   | |   |  |
+      ...................
+    ........................
+  ..................................
+          `,
+          desc: 'It is a big garden of an abandoned village house.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to enter garden.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'garden',
+        },
+        {
+          dir: 'north',
+          id: 'marketPlace',
+        },
+        {
+          dir: 'west',
+          id: 'path-1',
+        },
+        {
+          dir: 'east',
+          id: 'path-3',
+        },
+      ],
+    },
+    {
       id: 'muhtarBedroom',
       name: 'Muhtar\'s Bedroom',
       desc: `This is a dark room with no windows. 
