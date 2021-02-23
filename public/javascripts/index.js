@@ -1,7 +1,7 @@
 // global properties, assigned with let for easy overriding by the user
 let disk;
 let tvOpen;
-let woodtakenOrShown, woodtakenOrShown1, woodtakenOrShown2, letterTaken, letterShown;
+let woodtakenOrShown, woodtakenOrShown1, woodtakenOrShown2, woodtakenOrShown3, letterTaken, letterShown;
 
 // store user input history
 let inputs = [''];

@@ -4,6 +4,105 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'garden',
+      name: 'Garden',
+      img: `
+      _______| |_______
+     //////////////////
+    //////////////////  
+    |     _ _        |    |
+    |[_] |   |  [_]  |[_] |
+    |    |   |       |    |
+    |    |   |       |    |
+................................
+..........................................
+......................................................
+      `,
+      desc: `Garden. 
+      Garden has FENCES.
+      On [SOUTH] is the HOUSE.
+      On [NORTH] is the PATH.
+      `,
+      items: [
+        {
+          name: ['Fences','fence'],
+          desc: 'Wooden fences. It has one loose WOOD.', // Displayed when the player looks at the item.
+          onUse: () => println(`Too long to climb.`),
+          onLook: () => {
+            if (woodtakenOrShown3) {
+              // the key is already in the pot or the player's inventory
+              return;
+            };
+            const garden = getRoom('garden');
+            
+            // put the silver key in the pot
+            garden.items.push({
+              name: 'wood',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                } else {
+                  println(`You can't use wood here.`);
+                  // this item can only be used once
+                };
+              },
+              desc: `Fence wood.`,
+              onLook: () => {
+                const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+                // let's also update the description
+                wood.desc = `It will be enough for today if burned on fireplace.`;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it.`);
+                // update the monstera's description, removing everything starting at the line break
+                const fences = getItemInRoom('Fences', 'garden');
+                fences.desc = "Fences. Lacking a bid wooden piece of it.";
+              },
+            });
+            woodtakenOrShown3 = true; // Called when the player uses the item.
+          },
+        },
+        {
+          name: ['garden house','garden', 'house', 'abandoned house', 'abandoned', 'south'],
+          img: `
+  _______| |_______
+ //////////////////
+//////////////////  
+|     _ _        |    |
+|[_] |   |  [_]  |[_] |
+|    |   |       |    |
+|    |   |       |    |`,
+          desc: 'Abandoned village house. Many people left the village and their houses.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to try enter the house.`), // Called when the player uses the item.
+        },
+        {
+          name: ['path', 'road', 'north'],
+          desc: 'Village path on west and east direction.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to go to the path.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'gardenHouse',
+        },
+        {
+          dir: 'north',
+          id: 'path-2',
+        },
+      ],
+    },
+    {
       id: 'path-2',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
@@ -16,9 +115,8 @@ const village = {
           onUse: () => println(`Type GO NORTH to visit the marketplace.`), // Called when the player uses the item.
         },
         {
-          name: ['garden house','garden', 'house', 'abandoned house', 'abandoned'],
+          name: ['house','abandoned house', 'abandoned'],
           img: `
-Art by Veronica Karlsson
       ____||____
      ///////////
     ///////////  
