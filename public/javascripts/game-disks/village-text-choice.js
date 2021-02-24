@@ -4,6 +4,83 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'northPath',
+      name: 'Path',
+      desc: `Path to east and west.
+      To the north is Coffee House owner Cumhur's house.
+      On south is baker Fatma's house.`,
+  
+      exits: [
+        {
+          dir: 'south',
+          id: "fatmaHouse",
+        },
+        {
+          dir: 'north',
+          id: 'cumhurHouse',
+        },
+        {
+          dir: 'west',
+          id: 'crossRoad',
+        },
+        {
+          dir: 'east',
+          id: 'northPath-1',
+        },
+      ],
+    },
+    {
+      id: 'northPath-1',
+      name: 'Path',
+      desc: `Path to east and west.
+      To the north is buthcher Eren's house.
+      On south is a two-storey house. No one lives there. `,
+  
+      exits: [
+        {
+          dir: 'south',
+          id: "two-Storey",
+        },
+        {
+          dir: 'north',
+          id: 'erenHouse',
+        },
+        {
+          dir: 'west',
+          id: 'northPath',
+        },
+        {
+          dir: 'east',
+          id: 'northPath-2',
+        },
+      ],
+    },
+    {
+    id: 'northPath-2',
+    name: 'Path',
+    desc: `Path to east and west. On south you see the house of butcher.
+    To the north is unemployed man's house. `,
+
+    exits: [
+      {
+        dir: 'south',
+        id: "butcherHouse",
+      },
+      {
+        dir: 'north',
+        id: 'unempHouse',
+      },
+      {
+        dir: 'west',
+        id: 'northPath-1',
+      },
+      {
+        dir: 'east',
+        id: 'northPath-3',
+      },
+    ],
+  },
+    {
       id: 'northPath-3',
       name: 'Path',
       desc: `Path to west. On south you see the house of Carpenter.
