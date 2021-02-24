@@ -4,6 +4,135 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'northPath-3',
+      name: 'Path',
+      desc: `Path to west. On south you see the house of Carpenter.
+      To east is the park.
+      To the north is graveyard. `,
+
+      exits: [
+        {
+          dir: 'south',
+          id: "carpenter's house",
+        },
+        {
+          dir: 'north',
+          id: 'graveYard',
+        },
+        {
+          dir: 'west',
+          id: 'northPath-2',
+        },
+        {
+          dir: 'east',
+          id: 'park',
+        },
+      ],
+    },
+    {
+      id: 'park',
+      name: 'Park',
+      desc: 'There is a BENCH',
+      items: [
+        {
+          name: 'Bench',
+          img: `
+  .=gp.
+ .'/$$$$
+ || "TP"
+ ||          .:
+ ||       .-' |
+ ||    .-'    |
+ ||    |      !____
+ ||    |   .-'  .-'
+ ||    '.____.-'(
+ ||     |  /  /__.
+ ||      )(
+|::|    /__i           fsc
+|::|
+          `,
+          onUse: () => {
+            println(`You sit on bench.`);
+          },
+          
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'carpenter',
+          block: 'No door to enter from this side.'
+        },
+        {
+          dir: 'north',
+          id: 'mountain',
+          block: "You can't climb the mountain."
+        },
+        {
+          dir: 'west',
+          id: 'northPath-3',
+        },
+        {
+          dir: 'east',
+          id: 'woods',
+        },
+      ],
+    },
+    {
+      id: 'woods',
+      name: 'Woods',
+      desc: `There are trees around.
+      You see marketplace on SOUTH.
+      Mountain on [NORTH].
+      Mountain on [EAST].
+      On [WEST] is a park.`,
+      items: [
+        {
+          name: 'wood',
+          onUse: () => {const room = getRoom(disk.roomId);
+          if (room.id === 'bizimEv') {
+            //name 'wood' olan nesnenin indeksini al
+            const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('Wood');
+            //name 'wood' olan nesneyi sil
+            if (woodIndex > -1){
+              disk.inventory.splice(woodIndex, 1);
+            };
+            println(`You put the wood on fire. This will keep the home warm.`);
+          } else {
+            println(`Better bring home. Mom will burn it in the fireplace.`);
+            // this item can only be used once
+            };
+          },
+          isTakeable: true,
+          onTake: () => {
+            println(`You took the wood.`);
+            // update the monstera's description, removing everything starting at the line break
+          },
+           // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'path-2',
+        },
+        {
+          dir: 'north',
+          id: 'mountain',
+          block: "You can't climb the mountain."
+        },
+        {
+          dir: 'west',
+          id: 'park',
+        },
+        {
+          dir: 'east',
+          id: 'mountain',
+          block: "You can't climb mountain."
+        },
+      ],
+    },
+    {
       id: 'garden',
       name: 'Garden',
       img: `
@@ -114,7 +243,7 @@ const village = {
       On [WEST] is carpenter.`,
       items: [
         {
-          name: ['Rotten vegetable','vegetable', 'eggplant'],
+          name: ['Rotten vegetable','vegetable', 'eggplant', 'rotten', 'aubergine'],
           desc: 'Mildly rotten. Still edible.', // Displayed when the player looks at the item.
           onUse: () => {const room = getRoom(disk.roomId);
           if (room.id === 'bizimEv') {
