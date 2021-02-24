@@ -18,7 +18,7 @@ const village = {
 ..........................................
 ......................................................
       `,
-      desc: `Garden. 
+      desc: ` 
       Garden has FENCES.
       On [SOUTH] is the HOUSE.
       On [NORTH] is the PATH.
@@ -99,6 +99,64 @@ const village = {
         {
           dir: 'north',
           id: 'path-2',
+        },
+      ],
+    },
+    {
+      id: 'marketPlace',
+      name: 'Marketplace',
+      desc: `Empty now. The marketplace is open on fridays. 
+      People come and sell stuff.
+      There are some rotten vegetables on the ground.
+      You see path on SOUTH.
+      Woods on [NORTH].
+      Mountain on [EAST].
+      On [WEST] is carpenter.`,
+      items: [
+        {
+          name: ['Rotten vegetable','vegetable', 'eggplant'],
+          desc: 'Mildly rotten. Still edible.', // Displayed when the player looks at the item.
+          onUse: () => {const room = getRoom(disk.roomId);
+          if (room.id === 'bizimEv') {
+            //name 'wood' olan nesnenin indeksini al
+            const foodIndex = disk.inventory.map(function(e) {return e.name[0];}).indexOf('Rotten vegetable');
+            //name 'wood' olan nesneyi sil
+            if (foodIndex > -1){
+              disk.inventory.splice(foodIndex, 1);
+            };
+            println(`You gave the eggplant to mom.`);
+          } else {
+            println(`Better bring home. Mom and son are hungry.`);
+            // this item can only be used once
+            };
+          },
+          isTakeable: true,
+          onTake: () => {
+            println(`You took the rotten eggplant.`);
+            // update the monstera's description, removing everything starting at the line break
+            vegetableTaken = true;
+          },
+           // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'path-2',
+        },
+        {
+          dir: 'north',
+          id: 'woods',
+        },
+        {
+          dir: 'west',
+          id: 'carpenter',
+          block: "Locked and looks no one there."
+        },
+        {
+          dir: 'east',
+          id: 'mountain',
+          block: "You can't climb mountain."
         },
       ],
     },
