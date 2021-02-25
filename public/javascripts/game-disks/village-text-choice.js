@@ -4,6 +4,44 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'crossRoad',
+      name: 'Crossroad',
+      desc: `To north-south and west-east direction.
+      To south-east is grocery, to south-west is meatball diner.
+      North-east is coffee house.`,
+  
+      exits: [
+        {
+          dir: 'north',
+          id: "northpath+1",
+        },
+        {
+          dir: 'west',
+          id: "northpath1",
+        },
+        {
+          dir: 'south-east',
+          id: "grocery",
+        },
+        {
+          dir: 'north-east',
+          id: 'coffeeHouse',
+        },
+        {
+          dir: 'south-west',
+          id: 'meatballDiner',
+        },
+        {
+          dir: 'east',
+          id: 'northPath',
+        },
+        {
+          dir: 'south',
+          id: 'southPath',
+        },
+      ],
+    },
+    {
       id: 'northPath',
       name: 'Path',
       desc: `Path to east and west.
@@ -624,12 +662,12 @@ const village = {
       exits: [
         {
           dir: 'north', // "dir" can be anything. If it's north, the player will type "go north" to get to the room called "A Forest Clearing".
-          id: 'path1',
+          id: 'path',
         },
       ],
     },
     {
-      id: 'path1',
+      id: 'path',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
       One side of the path [NORTH], is the HOUSE of Ali.
@@ -646,7 +684,7 @@ const village = {
         },
         {
           dir: 'west',
-          id: 'path2',
+          id: 'path1',
         },
         {
           dir: 'east',
@@ -655,7 +693,7 @@ const village = {
       ],
     },
     {
-      id: 'path2',
+      id: 'path1',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
       On one side of the path, is an ABANDONED HOUSE.[NORTH] 
@@ -672,11 +710,11 @@ const village = {
         },
         {
           dir: 'east',
-          id: 'path1',
+          id: 'path',
         },
         {
           dir: 'west',
-          id: 'path3',
+          id: 'path2',
         },
       ],
       items: [
@@ -755,7 +793,7 @@ const village = {
       exits: [
         {
           dir: 'south',
-          id: 'path2',
+          id: 'path1',
         },
         {
           dir: ['up', 'upstairs'],
@@ -887,6 +925,82 @@ const village = {
           dir: ['down', 'downstairs'],
           id: 'abandonedHouse',
         }
+      ],
+    },
+    {
+      id: 'path2',
+      name: 'Path',
+      desc: `It's the village path. On WEST and EAST direction. 
+      [NORTH] of the path is grocer's house.
+      Other side of the path [SOUTH] is the lone old lady's house`,
+      items: [
+        {
+          name: ['carpenter\'s workshop','carpenter', 'workshop'],
+          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the guard post.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
+        },
+        {
+          name: ['house of muhtar','muhtar', 'house'],
+          desc: 'It is muhtar\'s house. Generally in the evenings he is home.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to enter muhtar\'s house.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'oldHouse',
+        },
+        {
+          dir: 'north',
+          id: 'grocerHouse',
+          block: 'Door is closed and no one seems to be home',
+        },
+        {
+          dir: 'west',
+          id: 'path3',
+        },
+        {
+          dir: 'east',
+          id: 'path1',
+        },
+      ],
+    },
+    {
+      id: 'path3',
+      name: 'Path',
+      desc: `It's the village path. On WEST and EAST direction. 
+      [NORTH] of the path is grocery.
+      Other side of the path [SOUTH] is the meatball diner Melisa's house`,
+      items: [
+        {
+          name: ['carpenter\'s workshop','carpenter', 'workshop'],
+          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the guard post.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
+        },
+        {
+          name: ['house of muhtar','muhtar', 'house'],
+          desc: 'It is muhtar\'s house. Generally in the evenings he is home.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to enter muhtar\'s house.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'melisaHouse',
+        },
+        {
+          dir: 'north',
+          id: 'grocery',
+          block: 'Door is closed and no one seems to be home',
+        },
+        {
+          dir: 'west',
+          id: 'southPath',
+        },
+        {
+          dir: 'east',
+          id: 'path2',
+        },
       ],
     },
   ],
