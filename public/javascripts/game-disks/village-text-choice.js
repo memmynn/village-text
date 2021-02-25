@@ -1003,6 +1003,30 @@ const village = {
         },
       ],
     },
+    {
+      id: 'southPath',
+      name: 'Path',
+      desc: `It's the village path. On EAST, NORTH and SOUTH direction. 
+      On west is the bakery.`,
+      exits: [
+        {
+          dir: 'south',
+          id: 'southPath-1',
+        },
+        {
+          dir: 'north',
+          id: 'crossRoad',
+        },
+        {
+          dir: 'west',
+          id: 'bakery',
+        },
+        {
+          dir: 'east',
+          id: 'path3',
+        },
+      ],
+    },
   ],
   characters: [
     {
