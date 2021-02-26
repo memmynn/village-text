@@ -4,32 +4,51 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
-      id: 'crossRoad',
-      name: 'Crossroad',
-      desc: `To north-south and west-east direction.
-      To south-east is grocery, to south-west is meatball diner.
-      North-east is coffee house.`,
-  
+      id: 'northPath+1',
+      name: 'Path',
+      desc: `That goes to south.
+      To west is tea house. North is the military base.
+      To east is butcher [Zafer].`,
       exits: [
         {
           dir: 'north',
-          id: "northpath+1",
+          id: "base",
         },
         {
           dir: 'west',
-          id: "northpath1",
+          id: "teaHouse",
         },
         {
-          dir: 'south-east',
+          dir: 'south',
+          id: "crossRoad",
+        },
+        {
+          dir: 'east',
+          id: 'butcher',
+        },
+      ],
+    },
+    {
+      id: 'crossRoad',
+      name: 'Crossroad',
+      desc: `To north-south and east direction.
+      To west is meatball diner. To south east is grocery. There is butcher on north east.`,
+      exits: [
+        {
+          dir: 'north',
+          id: "northPath+1",
+        },
+        {
+          dir: 'west',
+          id: "diner",
+        },
+        {
+          dir: 'south east',
           id: "grocery",
         },
         {
-          dir: 'north-east',
-          id: 'coffeeHouse',
-        },
-        {
-          dir: 'south-west',
-          id: 'meatballDiner',
+          dir: 'north east',
+          id: 'butcher',
         },
         {
           dir: 'east',
@@ -45,17 +64,17 @@ const village = {
       id: 'northPath',
       name: 'Path',
       desc: `Path to east and west.
-      To the north is Coffee House owner Cumhur's house.
+      To the north is butcher.
       On south is baker Fatma's house.`,
   
       exits: [
         {
           dir: 'south',
-          id: "fatmaHouse",
+          id: "grocery",
         },
         {
           dir: 'north',
-          id: 'cumhurHouse',
+          id: 'butcher',
         },
         {
           dir: 'west',
@@ -229,7 +248,7 @@ const village = {
       exits: [
         {
           dir: 'south',
-          id: 'path-2',
+          id: 'marketPlace',
         },
         {
           dir: 'north',
@@ -317,7 +336,7 @@ const village = {
           },
         },
         {
-          name: ['garden house','garden', 'house', 'abandoned house', 'abandoned', 'south'],
+          name: ['house', 'abandoned house', 'abandoned', 'south'],
           img: `
   _______| |_______
  //////////////////
@@ -350,8 +369,7 @@ const village = {
       id: 'marketPlace',
       name: 'Marketplace',
       desc: `Empty now. The marketplace is open on fridays. 
-      People come and sell stuff.
-      There are some rotten vegetables on the ground.
+      There are some ROTTEN VEGETABLEs on the ground.
       You see path on SOUTH.
       Woods on [NORTH].
       Mountain on [EAST].
@@ -417,7 +435,7 @@ const village = {
           onUse: () => println(`Type GO NORTH to visit the marketplace.`), // Called when the player uses the item.
         },
         {
-          name: ['house','abandoned house', 'abandoned'],
+          name: ['house','abandoned house', 'abandoned', 'garden', 'garden house'],
           img: `
       ____||____
      ///////////
@@ -484,7 +502,7 @@ const village = {
       name: 'Muhtar\'s House',
       desc: `A warm village house of two rooms. 
       There is a sofa, a WARDROBE, FIREPLACE and TELEVISION.
-      A DOOR to his bedroom.
+      A DOOR to his bedroom [south].
       Muhtar lives here. But not here now. Better quit.`,
       items: [
         {
@@ -510,6 +528,16 @@ const village = {
             // put the silver key in the pot
             muhtarEv.items.push({
               name: 'paper',
+              onRead: () => {
+                println(`It reads 
+                
+                Dear Muhtar,
+                
+                We will take over the village in 10 days.
+                
+                All the best,
+                Commander`);
+              },
               onUse: () => {
                   println(`It reads 
                   
@@ -530,6 +558,7 @@ const village = {
                 paper.desc = `Official paper.`;
               },
               isTakeable: true,
+              isReadable: true,
               onTake: () => {
                 println(`You took it.`);
                 // update the monstera's description, removing everything starting at the line break
@@ -537,6 +566,7 @@ const village = {
                 wardrobe.desc = `You opened it. There are clothes.`;
                 letterTaken = true;
               },
+              
             });
             letterShown = true;
           },
@@ -933,18 +963,7 @@ const village = {
       desc: `It's the village path. On WEST and EAST direction. 
       [NORTH] of the path is grocer's house.
       Other side of the path [SOUTH] is the lone old lady's house`,
-      items: [
-        {
-          name: ['carpenter\'s workshop','carpenter', 'workshop'],
-          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the guard post.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
-        },
-        {
-          name: ['house of muhtar','muhtar', 'house'],
-          desc: 'It is muhtar\'s house. Generally in the evenings he is home.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO SOUTH to enter muhtar\'s house.`), // Called when the player uses the item.
-        },
-      ],
+      
       exits: [
         {
           dir: 'south',
@@ -971,18 +990,6 @@ const village = {
       desc: `It's the village path. On WEST and EAST direction. 
       [NORTH] of the path is grocery.
       Other side of the path [SOUTH] is the meatball diner Melisa's house`,
-      items: [
-        {
-          name: ['carpenter\'s workshop','carpenter', 'workshop'],
-          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the guard post.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
-        },
-        {
-          name: ['house of muhtar','muhtar', 'house'],
-          desc: 'It is muhtar\'s house. Generally in the evenings he is home.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO SOUTH to enter muhtar\'s house.`), // Called when the player uses the item.
-        },
-      ],
       exits: [
         {
           dir: 'south',
@@ -1131,3 +1138,4 @@ const village = {
     },
   ],
 };
+

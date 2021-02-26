@@ -393,6 +393,48 @@ let take = () => {
   println(`The following items can be taken:`);
   items.forEach(item => println(`${bullet} ${getName(item.name)}`));
 };
+//list readable items in room
+let read = () => {
+  const room = getRoom(disk.roomId);
+
+  const readableItems = (room.items || [])
+    .concat(disk.inventory)
+    .filter(item => item.onRead);
+
+  if (!readableItems.length) {
+    println(`There's nothing to use.`);
+    return;
+  }
+
+  println(`The following items can be read:`);
+  readableItems.forEach((item) => {
+    println(`${bullet} ${getName(item.name)}`)
+  });
+};
+
+// use the item with the given name
+// string -> nothing
+let readItem = (itemName) => {
+  const item = getItemInInventory(itemName) || getItemInRoom(itemName, disk.roomId);
+
+  if (!item) {
+    println(`You don't have that.`);
+    return;
+  }
+
+  if (!item.onRead) {
+    println(`There is nothing to read on it.`);
+    return;
+  }
+
+  // use item and give it a reference to the game
+  if (typeof item.onRead === 'string') {
+    const read = eval(item.onRead);
+    read({disk, println, getRoom, enterRoom, item});
+  } else if (typeof item.onRead === 'function') {
+    item.onRead({disk, println, getRoom, enterRoom, item});
+  }
+};
 
 // take the item with the given name
 // string -> nothing
@@ -424,6 +466,8 @@ let takeItem = (itemName) => {
     }
   }
 };
+
+
 
 // list useable items in room and inventory
 let use = () => {
@@ -560,6 +604,7 @@ let commands = [
     get: take,
     items,
     use,
+    read,
     chars,
     help,
     say,
@@ -574,6 +619,7 @@ let commands = [
     take: takeItem,
     get: takeItem,
     use: useItem,
+    read: readItem,
     say: sayString,
     save: x => save(x),
     load: x => load(x),
