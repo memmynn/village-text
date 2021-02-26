@@ -529,8 +529,7 @@ const village = {
             muhtarEv.items.push({
               name: 'paper',
               onRead: () => {
-                println(`It reads 
-                
+                println(`
                 Dear Muhtar,
                 
                 We will take over the village in 10 days.
@@ -697,6 +696,32 @@ const village = {
       ],
     },
     {
+      id: 'AliEv',
+      name: 'House of Ali',
+      desc: `An old house.
+      Light enters from the window.
+      Door to south.
+      Your best friend Ali lives here.
+      `,
+      items: [
+        {
+          name: ['window'],
+          desc: `You can see the street from window.`, // Displayed when the player looks at the item.
+          onUse: () => println(`You opened and fresh air passed through.`), // Called when the player uses the item.          
+        },
+        {name: ['door'],
+        desc: `Door to exit.`, // Displayed when the player looks at the item.
+        onUse: () => println(`Type GO TO SOUTH to exit.`), // Called when the player uses the item.          
+      },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'path',
+        },
+      ],
+    },
+    {
       id: 'path',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
@@ -710,7 +735,6 @@ const village = {
         {
           dir: 'north',
           id: 'AliEv',
-          block: 'Door is closed and no one seems to be home',
         },
         {
           dir: 'west',
@@ -1057,6 +1081,24 @@ const village = {
       And you know that is true.`),
       topics: [
         
+      ],
+    },
+    {
+      name: 'Ali',
+      roomId: 'AliEv',
+      onTalk: () => println(`"You are such an asshole," Ali says. "I wish you were arrested by the soldiers."
+      "I wish you were dead during the invasion" you respond.
+      You both laugh!`),
+      topics: [
+        {
+          option: `Tell me about **INVASION**`,
+          line: `It was two years ago. Really bad times...`
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `He is the commander of village's military base.
+          During invasion he caused so many to die in the village. Including your wife.`,
+        },
       ],
     },
     {

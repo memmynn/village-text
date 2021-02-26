@@ -402,7 +402,7 @@ let read = () => {
     .filter(item => item.onRead);
 
   if (!readableItems.length) {
-    println(`There's nothing to use.`);
+    println(`There's nothing to read.`);
     return;
   }
 
