@@ -140,7 +140,7 @@ const village = {
     {
       id: 'northPath-3',
       name: 'Path',
-      desc: `Path to west. On south you see the house of Carpenter.
+      desc: `Path to west. On south you see the HOUSE OF CARPENTER [Yusuf].
       To east is the park.
       To the north is graveyard. `,
 
@@ -628,8 +628,7 @@ const village = {
       items: [
         {
           name: ['carpenter\'s workshop','carpenter', 'workshop'],
-          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the guard post.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
+          desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the military base.', // Displayed when the player looks at the item.          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
         },
         {
           name: ['house of muhtar','muhtar', 'house'],
@@ -645,7 +644,7 @@ const village = {
         {
           dir: 'north',
           id: 'carpenter',
-          block: 'Door is closed and no one seems to be home',
+          block: 'Entrance on the other side.',
         },
         {
           dir: 'west',
@@ -704,6 +703,7 @@ const village = {
       Your best friend Ali lives here.
       ALİ is here now.      
       `,
+      onEnter: () => println(`"Hi bastard" says Ali`),
       items: [
         {
           name: ['window'],
@@ -728,7 +728,27 @@ const village = {
       desc: `It's the village path. On WEST and EAST direction. 
       One side of the path [NORTH], is the HOUSE of Ali.
       Other side of the path [SOUTH] is your home`,
-      exits: [
+      items: [
+        {
+          name: ['House of Ali', 'Door'],
+          img:`
+      ______
+   ,-' ;  ! \`-.
+  / :  !  :  . \\
+ |_ ;   __:  ;  |
+ )| .  :)(.  !  |
+ |"    (##)  _  |
+ |  :  ;\`'  (_) (
+ |  :  :  .     |
+ )_ !  ,  ;  ;  |
+ || .  .  :  :  |
+ |" .  |  :  .  |
+ |mt-2_;----.___|`,
+          
+          onUse: () => println(`You knocked the door. "Door is open!" said someone.`), // Called when the player uses the item.
+        }
+      ],
+        exits: [
         {
           dir: 'south',
           id: 'bizimEv',
@@ -1088,12 +1108,12 @@ const village = {
       name: 'Ali',
       desc: [`Tall, in his thirties.`, `A handsome asshole.`],
       roomId: 'AliEv',
-      onTalk: () => println(`"You are such an asshole," Ali says;"I wish you were arrested by the soldiers."`),
+      onTalk: () => println(`"Hey dick head," Ali says;"I wish you were arrested by the soldiers."`),
       topics: [
         {
           option: `I wish you were **DEAD** during accident.`,
           onSelected() {
-            println(`"HAHAHAH!" Ali laughs.`)
+            println(`"HAHAHAH!" you both laugh.`)
             },
           removeOnRead: true,
         },
@@ -1106,7 +1126,13 @@ const village = {
         {
           option: `Let's talk about **COMMANDER**`,
           line: `He is the commander of village's military base.
-          During invasion he caused so many to die in the village. Including your wife.`,
+          During invasion, so many died in the village.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `Your wife died.`,
           prereqs: ['dead'],
           removeOnRead: true
         },
