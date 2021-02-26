@@ -664,7 +664,7 @@ const village = {
       You hear the crackling of the FIREPLACE. 
       You live with your MOTHER and your SON here. 
       There is a door on the NORTH. 
-      Type ITEMS to see who is here.`, // Displayed when the player first enters the room.
+      Type ITEMS to see what is here.`, // Displayed when the player first enters the room.
       items: [
         {
           name: 'door',
@@ -699,9 +699,10 @@ const village = {
       id: 'AliEv',
       name: 'House of Ali',
       desc: `An old house.
-      Light enters from the window.
-      Door to south.
+      Light enters from the WINDOW.
+      DOOR to south.
       Your best friend Ali lives here.
+      ALİ is here now.      
       `,
       items: [
         {
@@ -712,11 +713,11 @@ const village = {
         {name: ['door'],
         desc: `Door to exit.`, // Displayed when the player looks at the item.
         onUse: () => println(`Type GO TO SOUTH to exit.`), // Called when the player uses the item.          
-      },
+        },
       ],
       exits: [
         {
-          dir: 'south',
+          dir: ['south', `door`],
           id: 'path',
         },
       ],
@@ -1061,7 +1062,7 @@ const village = {
   ],
   characters: [
     {
-      name: ['Mother'],
+      name: ['Mother', 'mom', 'my mother', 'my mom', 'mommy', 'my mommy', 'mommie', 'my mommie'],
       roomId: 'bizimEv',
       desc: `She looks old and tired. 
       You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
@@ -1073,7 +1074,7 @@ const village = {
       ],
     },
     {
-      name: 'son',
+      name: ['son', 'my son', 'sonnie', 'boy', 'my boy', 'my sonnie'],
       roomId: 'bizimEv',
       desc: `Your son of 5 years. 
       He looks weaker than before.`,
@@ -1085,19 +1086,34 @@ const village = {
     },
     {
       name: 'Ali',
+      desc: [`Tall, in his thirties.`, `A handsome asshole.`],
       roomId: 'AliEv',
-      onTalk: () => println(`"You are such an asshole," Ali says. "I wish you were arrested by the soldiers."
-      "I wish you were dead during the invasion" you respond.
-      You both laugh!`),
+      onTalk: () => println(`"You are such an asshole," Ali says;"I wish you were arrested by the soldiers."`),
       topics: [
         {
+          option: `I wish you were **DEAD** during accident.`,
+          onSelected() {
+            println(`"HAHAHAH!" Ali laughs.`)
+            },
+          removeOnRead: true,
+        },
+        {
           option: `Tell me about **INVASION**`,
-          line: `It was two years ago. Really bad times...`
+          line: `It was two years ago. Really bad times...`,
+          prereqs: ['dead'],
+          removeOnRead: true,
         },
         {
           option: `Let's talk about **COMMANDER**`,
           line: `He is the commander of village's military base.
           During invasion he caused so many to die in the village. Including your wife.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `You can find wood in the forest.`,
+          prereqs: ['dead']
         },
       ],
     },
