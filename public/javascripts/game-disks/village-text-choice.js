@@ -368,6 +368,107 @@ const village = {
       ],
     },
     {
+      id: 'gardenHouse',
+      name: 'Garden House',
+      desc: `Abandoned.
+      It has two WINDOWS facing the garden [NORTH].
+      One WINDOW facing [WEST].
+      One DOOR [NORTH].
+      So dusty.`,
+      items: [
+        {
+          name: ['windows'],
+          desc: 'You see the garden with green grass.', // Displayed when the player looks at the item.
+          onUse: () => {println("You closed it")},
+          onTake: () => {
+            println(`Looks hard to break and take.`);
+            // update the monstera's description, removing everything starting at the line break
+          },
+           // Called when the player uses the item.
+        },
+        {
+          name: ['window'],
+          desc: 'You see the garden with green grass.', // Displayed when the player looks at the item.
+          onUse: () => {println("You closed it")},
+          onTake: () => {
+            println(`Looks hard to break and take.`);
+            // update the monstera's description, removing everything starting at the line break
+          },
+           // Called when the player uses the item.
+        },
+        {
+          name: 'door',
+          img: ` ______________
+|\\ ___________ /|
+| |  /|,| |   | |
+| | |,x,| |   | |
+| | |,x,' |   | |
+| | |,x   ,   | |
+| | |/    |%==| |
+| |    /] ,   | |
+| |   [/ ()   | |
+| |       |   | |
+| |       |   | |
+| |       |   | |
+| |      ,'   | |
+| |   ,'      | |
+|_|,'_________|_| ejm`,
+          desc: 'Open. You see the garden with green grass.', // Displayed when the player looks at the item.
+          onUse: () => {
+            const door = getItemInRoom('door', 'gardenHouse');
+            if(!doorClosed){
+            println("You closed it. Type GO NORTH to exit.")
+            doorClosed = true
+            door.desc = 'Closed.'
+            door.img = ` 
+ ______________
+|\\ ___________ /|
+| |  _ _ _ _  | |
+| | | | | | | | |
+| | |-+-+-+-| | |
+| | |-+-+=+%| | |
+| | |_|_|_|_| | |
+| |    ___    | |
+| |   [___] ()| |
+| |         ||| |
+| |         ()| |
+| |           | |
+| |           | |
+| |           | |
+|_|___________|_|  ejm` 
+          } else {
+            println("You opened it. Type GO NORTH to exit.")
+            doorClosed = false
+            door.desc = 'Open. You see the garden with green grass.'
+            door.img = `______________
+|\\ ___________ /|
+| |  /|,| |   | |
+| | |,x,| |   | |
+| | |,x,' |   | |
+| | |,x   ,   | |
+| | |/    |%==| |
+| |    /] ,   | |
+| |   [/ ()   | |
+| |       |   | |
+| |       |   | |
+| |       |   | |
+| |      ,'   | |
+| |   ,'      | |
+|_|,'_________|_| ejm`;
+              }
+              return
+            },
+         
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'garden',
+        },
+      ],
+    },
+    {
       id: 'marketPlace',
       name: 'Marketplace',
       desc: `Empty now. The marketplace is open on fridays. 
@@ -426,9 +527,90 @@ const village = {
       ],
     },
     {
+      id: 'road',
+      name: 'Road to city',
+      desc: `It's asphalt. On EAST direction. 
+      To EAST you see the road to city.
+      To WEST is path to village.
+      Mountain on [NORTH] and [SOUTH].
+      SOLDIER in front of you.`,
+      img: `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @ @@@@@@@@@@@@@@@ @#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@ @ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@@&@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@%  @ @@.@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@#/@@@@@@@@@# @ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@( / #@@  @@@@@     .@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@ @ &*%@/@@@@@@@@@@@@@&& @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@ @@@ .@@ @@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@& @@@@@@@@@@@@@@@@@@  @ @@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@ .@@@@@@@@@@@@@@@@ @@@ .@ @   @@  @@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@.  @@@@@@@@@@@@@@ @@@,@@.@ @ @@@@@  @@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@/     @@@@@@@@@@@@@  @ @@@@@@@/@@  @@  @@@@@@@@@@* #@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/@@@@@@@@@@@@@@@&@@@@@@@(  @@@@@@@@@@@
+@@@@@@@@@@@*, @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@ @@@@@@@@@@@@
+@@@@@@@@@@@ #(@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@ @@@@@@@@@@@@
+@@@@@@@@@@ @ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@#(@ @@@@@@@@@
+@@@@@@@@@ @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@ @  @@@@@@@@
+@@@@@@@  @ ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/@@@@@@@@@@@ .((@@@@@@@
+@@@@( @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@ @@ @@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@ @@ @@@@@@@
+@@@@@   @@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ &@@@@@@@@@@@@@@@ @@@@@@
+@@  @@@@@@@@@@@@@@@ /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  &@@@@@@@@@@@@@@@ @@@@@@
+@@ @@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@. @@@@@
+@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@ @@@@
+@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@./@@@@@@@ #@*@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@(%@@@
+@@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@
+      `,
+      items: [
+        {
+          name: ['Marketplace','bazaar', 'market'],
+          desc: 'Empty now. Marketplace only open on fridays.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to visit the marketplace.`), // Called when the player uses the item.
+        },
+        {
+          name: ['house','abandoned house', 'abandoned', 'garden', 'garden house'],
+          img: `
+      ____||____
+     ///////////
+    ///////////  
+    |    _    |  |
+    |[] | | []|[]|
+    |   | |   |  |
+...................
+........................
+.............................`,
+          desc: 'It is a big garden of an abandoned village house.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to enter garden.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'garden',
+        },
+        {
+          dir: 'north',
+          id: 'marketPlace',
+        },
+        {
+          dir: 'west',
+          id: 'path-1',
+        },
+        {
+          dir: 'east',
+          id: 'road',
+        },
+      ],
+    },
+    {
       id: 'path-2',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
+      To EAST you see the road to city and a patrolling soldier.
       One side of the path [NORTH], is the MARKETPLACE.
       Other side of the path [SOUTH] is an abandoned GARDEN HOUSE`,
       items: [
@@ -468,7 +650,7 @@ const village = {
         },
         {
           dir: 'east',
-          id: 'path-3',
+          id: 'road',
         },
       ],
     },
@@ -481,7 +663,7 @@ const village = {
       items: [
         {
           name: ['bed'],
-          onUse: () => println(`You don't feel sleepy now.`),
+          onUse: () => println(`Better sleep in my own bed.`),
         },
         {
           name: ['chest'],
