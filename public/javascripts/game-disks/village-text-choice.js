@@ -232,6 +232,7 @@ const village = {
               disk.inventory.splice(woodIndex, 1);
             };
             println(`You put the wood on fire. This will keep the home warm.`);
+            woodGiven = true;
           } else {
             println(`Better bring home. Mom will burn it in the fireplace.`);
             // this item can only be used once
@@ -312,6 +313,7 @@ const village = {
                   };
                   println(`You put the wood into fireplace.
                   Now your home is warmer.`);
+                  woodGiven = true;
                 } else {
                   println(`You can't use wood here.`);
                   // this item can only be used once
@@ -387,6 +389,7 @@ const village = {
               disk.inventory.splice(foodIndex, 1);
             };
             println(`You gave the eggplant to mom.`);
+            foodGiven = true;
           } else {
             println(`Better bring home. Mom and son are hungry.`);
             // this item can only be used once
@@ -578,6 +581,7 @@ const village = {
             if (!wood){
               return println("You have no wood to fire it.");
             };
+
           },
         },
         {
@@ -672,8 +676,13 @@ const village = {
         },
         {
           name: 'bed', // The player can refer to this item by either name. The game will use the first name.
-          desc: `There is a bed on the wall. You sleep there.`,
-          onUse: () => println(`You are not feeling sleepy now.`)
+          desc: `There is a bed next toe wall. You sleep there.`,
+          onUse: () => {if(woodGiven && foodGiven){
+            println("Now your home is warm and your son is full. You can go to sleep.");
+            return
+          }
+          println(`You are not feeling sleepy now.`)
+          }
         },
         {
           name: 'fireplace',
@@ -835,6 +844,7 @@ const village = {
                   };
                   println(`You put the wood into fireplace.
                   Now your home is warmer.`);
+                  woodGiven = true;
                 } else {
                   println(`You can't use wood here.`);
                   // this item can only be used once
@@ -912,6 +922,7 @@ const village = {
                   };
                   println(`You put the wood into fireplace.
                   Now your home is warmer.`);
+                  woodGiven = true;
                 } else {
                   println(`You can't use wood here.`);
                   // this item can only be used once
@@ -1132,7 +1143,7 @@ const village = {
         },
         {
           option: `What happened during the **ACCIDENT**`,
-          line: `Your wife died.`,
+          line: `Your wife died during the accident.`,
           prereqs: ['dead'],
           removeOnRead: true
         },
