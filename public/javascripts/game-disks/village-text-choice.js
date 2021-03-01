@@ -1206,7 +1206,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
               // the key is already in the pot or the player's inventory
               return;
             }
-
+            kofteSeen = true;
             const ayşeHouse = getRoom('ayşeHouse');
             // put the silver key in the pot
             ayşeHouse.items.push({
@@ -1228,7 +1228,6 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
               },
               desc: `It's raw meatballs!`,
               onLook: () => {
-                kofteSeen = true;
                 const meatballs = getItemInInventory('something') || getItemInRoom('something', 'ayşeHouse');
                 meatballs.name = "meatballs";
 
