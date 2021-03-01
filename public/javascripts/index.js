@@ -8,7 +8,7 @@ let tvOpen, woodtakenOrShown,
   letterTaken, 
   letterShown, 
   woodGiven, 
-  foodGiven, doorClosed;
+  foodGiven, doorClosed, kofteSeen, kofteTaken;
 
 // store user input history
 let inputs = [''];

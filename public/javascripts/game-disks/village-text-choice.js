@@ -195,7 +195,7 @@ const village = {
         {
           dir: 'south',
           id: 'carpenter',
-          block: 'No door to enter from this side.'
+          block: 'Entrance is on the east side.'
         },
         {
           dir: 'north',
@@ -516,14 +516,201 @@ const village = {
         },
         {
           dir: 'west',
-          id: 'carpenter',
-          block: "Locked and looks no one there."
+          id: 'carpentry',
         },
         {
           dir: 'east',
           id: 'mountain',
           block: "You can't climb mountain."
         },
+      ],
+    },
+    {
+      id: 'carpentry',
+      name: 'Carpentry workshop',
+      desc: `There is a WORKBENCH.
+      A WINDOW on [SOUTH]. 
+      There are some WOODs here and there.
+      Entrance on [EAST].`,
+      items: [
+        {
+          name: 'workbench',
+          desc: 'Big and fit for timbers.', // Displayed when the player looks at the item.
+          onUse: () => println('You don\'t know how to use the bench.')
+        },
+        {
+          name: ['Window'],
+          desc: 'Little and rectangular, facing south.', // Displayed when the player looks at the item.
+          onUse: () => println('You see the village path.')
+        },
+        {
+          name: 'wood',
+          desc: 'Semi product wood.', // Displayed when the player looks at the item.
+          onUse: () => {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                  woodGiven = true;
+                } else {
+                println(`You can't use wood here.`);
+                // this item can only be used once
+                  }
+            },
+            desc: `It's a wood from carpentry workshop.`,
+            onLook: () => {
+              const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+              // let's also update the description
+              wood.desc = `It will be enough for today if burned on fireplace.`;
+            },
+            isTakeable: true,
+            onTake: () => {
+              println(`You took the wood.`);
+            }
+           // Called when the player uses the item.
+        },{
+          name: 'wood',
+          desc: 'Semi product wood.', // Displayed when the player looks at the item.
+          onUse: () => {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                  woodGiven = true;
+                } else {
+                println(`You can't use wood here.`);
+                // this item can only be used once
+                  }
+            },
+            desc: `It's a wood from carpentry workshop.`,
+            onLook: () => {
+              const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+              // let's also update the description
+              wood.desc = `It will be enough for today if burned on fireplace.`;
+            },
+            isTakeable: true,
+            onTake: () => {
+              println(`You took the wood.`);
+            }
+           // Called when the player uses the item.
+        },{
+          name: 'wood',
+          desc: 'Semi product wood.', // Displayed when the player looks at the item.
+          onUse: () => {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                  woodGiven = true;
+                } else {
+                println(`You can't use wood here.`);
+                // this item can only be used once
+                  }
+            },
+            desc: `It's a wood from carpentry workshop.`,
+            onLook: () => {
+              const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+              // let's also update the description
+              wood.desc = `It will be enough for today if burned on fireplace.`;
+            },
+            isTakeable: true,
+            onTake: () => {
+              println(`You took the wood.`);
+            }
+           // Called when the player uses the item.
+        },{
+          name: 'wood',
+          desc: 'Semi product wood.', // Displayed when the player looks at the item.
+          onUse: () => {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                  woodGiven = true;
+                } else {
+                println(`You can't use wood here.`);
+                // this item can only be used once
+                  }
+            },
+            desc: `It's a wood from carpentry workshop.`,
+            onLook: () => {
+              const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+              // let's also update the description
+              wood.desc = `It will be enough for today if burned on fireplace.`;
+            },
+            isTakeable: true,
+            onTake: () => {
+              println(`You took the wood.`);
+            }
+           // Called when the player uses the item.
+        },{
+          name: 'wood',
+          desc: 'Semi product wood.', // Displayed when the player looks at the item.
+          onUse: () => {
+              const room = getRoom(disk.roomId);
+              if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+                  //name 'wood' olan nesneyi sil
+                  if (woodIndex > -1){
+                    disk.inventory.splice(woodIndex, 1);
+                  };
+                  println(`You put the wood into fireplace.
+                  Now your home is warmer.`);
+                  woodGiven = true;
+                } else {
+                println(`You can't use wood here.`);
+                // this item can only be used once
+                  }
+            },
+            desc: `It's a wood from carpentry workshop.`,
+            onLook: () => {
+              const wood = getItemInInventory('wood') || getItemInRoom('wood');
+
+              // let's also update the description
+              wood.desc = `It will be enough for today if burned on fireplace.`;
+            },
+            isTakeable: true,
+            onTake: () => {
+              println(`You took the wood.`);
+            }
+           // Called when the player uses the item.
+        },
+
+      ],
+      exits: [
+        {
+          dir: 'east',
+          id: 'marketPlace',
+        }
       ],
     },
     {
@@ -791,11 +978,11 @@ const village = {
       id: 'path-1',
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
-      One side of the path [NORTH], is the CARPENTER WORKSHOP.
+      One side of the path [NORTH], is the CARPENTRY WORKSHOP.
       Other side of the path [SOUTH] is the HOUSE OF MUHTAR`,
       items: [
         {
-          name: ['carpenter\'s workshop','carpenter', 'workshop'],
+          name: ['carpenter\'s workshop','carpentry', 'carpentry workshop'],
           desc: 'It belongs to a guy called Yusuf. Providing wooden stuff to the military base.', // Displayed when the player looks at the item.          onUse: () => println(`Type GO NORTH to enter carpenter's workshop.`), // Called when the player uses the item.
         },
         {
@@ -812,11 +999,11 @@ const village = {
         {
           dir: 'north',
           id: 'carpenter',
-          block: 'Entrance on the other side.',
+          block: 'Entrance is on the east side.',
         },
         {
           dir: 'west',
-          id: 'path1',
+          id: 'path',
         },
         {
           dir: 'east',
@@ -850,6 +1037,23 @@ const village = {
         },
         {
           name: 'fireplace',
+          img:`    ________________________________________
+   [________________________________________]
+     ||_|_||_|_|_|_|_|_|_|_|_|_|_|_|_|_|_||
+     |_|_|_|  |                  |  |_|_|_|
+     ||_|_||  |         )'       |  ||_|_||
+     |_|_|_|  |       ),  )      |  |_|_|_|
+     ||_|_||  |     ,  ) , )     |  ||_|_||
+     |_|_|_|  |    (  ( , ) ,    |  |_|_|_|
+     ||_|_||  |   , ,' ) ( , )   |  ||_|_||
+     |_|_|_|  | _)' , ( '   (__ _|  |_|_|_|
+     ||_|_|| /_)_,)___),_)'_)__(_ \\ ||_|_||
+_____lc|_|_|/)______)_____)______( \\|_|_|_|_____
+""""/______________________________________\\""""
+"""[________________________________________]""""
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""`,
           desc: `It is burning with a relaxing crackling.`,
           //isTakeable: true, // Allows the player to take the item.
           onUse: () => {
@@ -953,8 +1157,7 @@ const village = {
         },
         {
           dir: 'south',
-          id: 'kofteciHouse',
-          block: 'Door is closed and no one seems to be home.',
+          id: 'ayşeHouse',
         },
         {
           dir: 'east',
@@ -971,6 +1174,90 @@ const village = {
           desc: 'It is a wooden ruined house. Door is open.', // Displayed when the player looks at the item.
           onUse: () => println(`Type GO NORTH get inside.`), // Called when the player uses the item.
         }
+      ],
+    },
+    {
+      id: 'ayşeHouse',
+      name: `Ayşe's House`,
+      desc: `It is bigger compared to many village houses.
+      There is a SOFA.
+      In front of sofa is a TABLE.
+      A door on [NORTH] to exit.
+      A big window facing the path [NORTH].
+      `,
+      items: [
+        {
+          name: 'door',
+          desc: 'Leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to try exit.`), // Called when the player uses the item.
+        },
+        {
+          name: 'sofa',
+          desc: 'It is a wooden sofa.', // Displayed when the player looks at the item.
+          onUse: () => println(`You sit on it.`), // Called when the player uses the item.
+        },
+        {
+          name: 'table',
+          desc: `Used for preparing meatballs. Ayşe is the owner of the Meatball Diner.
+
+          There is SOMETHING on the table`, // Displayed when the player looks at the item.
+          onLook: () => {
+            if (kofteSeen || kofteTaken) {
+              // the key is already in the pot or the player's inventory
+              return;
+            }
+
+            const ayşeHouse = getRoom('ayşeHouse');
+            // put the silver key in the pot
+            ayşeHouse.items.push({
+              name: 'something',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  println(`"Mom" you said. "Look what I bought for you"
+                  "Oh that is great." she smiles like she missed meat a century.`)
+                  foodGiven = true;
+                  const foodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('meatballs');
+                  if (foodIndex > -1){
+                    disk.inventory.splice(foodIndex, 1);
+                  };
+                } else {
+                  println(`I won't eat them alone.`);
+                  // remove the block
+                }
+              },
+              desc: `It's raw meatballs!`,
+              onLook: () => {
+                kofteSeen = true;
+                const meatballs = getItemInInventory('something') || getItemInRoom('something', 'ayşeHouse');
+                meatballs.name = "meatballs";
+
+                // let's also update the description
+                meatballs.desc = `Looks tasty. Mom and son will enjoy it.`;
+
+                const table = getItemInRoom('table', 'ayşeHouse')
+                table.desc = table.desc.replace('SOMETHING', 'MEATBALLS');
+                // remove this method (we don't need it anymore)
+                delete meatballs.onLook;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it.`);
+                kofteTaken = true
+                // update the monstera's description, removing everything starting at the line break
+                const table = getItemInRoom('table', 'ayşeHouse')
+                table.desc = table.desc.slice(0, table.desc.indexOf('\n'));
+              },
+            });
+          },
+        },
+        
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'path1',
+        },
       ],
     },
     {
@@ -1251,6 +1538,33 @@ const village = {
         {
           dir: 'east',
           id: 'path3',
+        },
+      ],
+    },
+    {
+      id: 'southPath-1',
+      name: 'Village entrance',
+      desc: `It's the village entrance path. On NORTH and SOUTH direction. 
+      Village to [NORTH].
+      To [SOUTH] is forest`,
+      exits: [
+        {
+          dir: 'south',
+          id: 'forestEntrance',
+        },
+        {
+          dir: 'north',
+          id: 'southPath',
+        },
+        {
+          dir: 'west',
+          id: 'rocks',
+          block: `There is a big rock, you can't climb that.`
+        },
+        {
+          dir: 'east',
+          id: 'melisaHouse',
+          block: `Melisa's house. But you can't enter from here.`
         },
       ],
     },
