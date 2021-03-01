@@ -1192,6 +1192,10 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           onUse: () => println(`Type GO NORTH to try exit.`), // Called when the player uses the item.
         },
         {
+          name: 'window',
+          onUse: () => println(`Stuck. You can't open it.`), // Called when the player uses the item.
+        },
+        {
           name: 'sofa',
           desc: 'It is a wooden sofa.', // Displayed when the player looks at the item.
           onUse: () => println(`You sit on it.`), // Called when the player uses the item.
@@ -1217,9 +1221,9 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
                   println(`"Mom" you said. "Look what I bought for you"
                   "Oh that is great." she smiles like she missed meat a century.`)
                   foodGiven = true;
-                  const foodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('meatballs');
-                  if (foodIndex > -1){
-                    disk.inventory.splice(foodIndex, 1);
+                  const food = disk.inventory.map(function(e) {return e.name;}).indexOf('meatballs') > -1 ? food : disk.inventory.map(function(e) {return e.name;}).indexOf('something')                  
+                  if (food > -1){
+                    disk.inventory.splice(food, 1);
                   };
                 } else {
                   println(`I won't eat them alone.`);
@@ -1473,7 +1477,55 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       exits: [
         {
           dir: 'south',
-          id: 'oldHouse',
+          id: 'oldLadyHouse',
+        },
+        {
+          dir: 'north',
+          id: 'grocerHouse',
+          block: 'Door is closed and no one seems to be home',
+        },
+        {
+          dir: 'west',
+          id: 'path3',
+        },
+        {
+          dir: 'east',
+          id: 'path1',
+        },
+      ],
+    },
+    {
+      id: 'oldLadyHouse',
+      name: `Old Lady's House`,
+      desc: `[NORTH] Door leading to path.
+      Little WINDOW facing [EAST].
+      A BED and a TABLE.`,
+      
+      items:[
+          {
+            name: ['window'],
+            desc: 'You can see Ayşe\'s house.', // Displayed when the player looks at the item.
+          },
+          {
+            name: ['table'],
+            desc: 'Given by the Commander as a gift for her helps during invasion.', // Displayed when the player looks at the item.
+          },
+          {
+            name: ['door'],
+            desc: `Old door.
+            
+            It has some RUNES on it.`, // Displayed when the player looks at the item.
+            onUse: 'Type GO NORTH to exit.'
+          },
+          {
+            name: ['bed'],
+            onUse: 'Better sleep at your own bed.'
+          },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'oldLadyHouse',
         },
         {
           dir: 'north',
