@@ -1474,118 +1474,34 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     {
       id: 'grocerHouse',
       name: 'Grocer\'s House',
-      desc: `Completely wooden.
-      You and Zafer, the owner of this house used to play together near the forest when you were children.`,
+      desc: `Mostly wooden.
+      A GATE to NORTH.
+      A DOOR to SOUTH.
+      A TELEVISION on a CHEST.
+      You and Zafer, the owner of this house used to play together near the forest when you were children.
+      No window on this house. So it is dark.`,
       items: [
         {
           name: ['television', 'tv'],
-          desc: `Broken on west side.
-          It is closed with a WOOD.`, // Displayed when the player looks at the item.
-          onUse: () => println(`Window is too small to pass through.`), // Called when the player uses the item.
-          onLook: () => {
-            if (woodtakenOrShown1) {
-              // the key is already in the pot or the player's inventory
-              return;
-            };
-
-            const secondStairs = getRoom('secondStairs');
-
-            // put the silver key in the pot
-            secondStairs.items.push({
-              name: 'wood',
-              onUse: () => {
-                const room = getRoom(disk.roomId);
-                if (room.id === 'bizimEv') {
-                  //name 'wood' olan nesnenin indeksini al
-                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
-                  //name 'wood' olan nesneyi sil
-                  if (woodIndex > -1){
-                    disk.inventory.splice(woodIndex, 1);
-                  };
-                  println(`You put the wood into fireplace.
-                  Now your home is warmer.`);
-                  woodGiven = true;
-                } else {
-                  println(`You can't use wood here.`);
-                  // this item can only be used once
-                };
-              },
-              desc: `It's a wood used in the empty house window.`,
-              onLook: () => {
-                const wood = getItemInInventory('wood') || getItemInRoom('wood');
-
-                // let's also update the description
-                wood.desc = `It will be enough for today if burned on fireplace.`;
-              },
-              isTakeable: true,
-              onTake: () => {
-                println(`You took it.`);
-                // update the monstera's description, removing everything starting at the line break
-                const windowOnWest = getItemInRoom('west window', 'secondStairs');
-                windowOnWest.desc = windowOnWest.desc.slice(0, windowOnWest.desc.indexOf('\n'));
-              },
-            });
-            woodtakenOrShown1 = true;
-          },
-          
+          desc: `Placed on a chest.`, // Displayed when the player looks at the item.
+          onUse: () => println(`Doesn't turn on. Maybe broken.`), // Called when the player uses the item.          
         },
         {
-          name: ['east window', 'east'],
-          desc: `Broken on east side.
-          It is closed with a WOOD.`, // Displayed when the player looks at the item.
-          onUse: () => println(`Window is too small to pass through.`), // Called when the player uses the item.
-          onLook: () => {
+          name: ['gate', 'north'],
+          desc: `A doorless gate to another room.`, // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH.`), // Called when the player uses the item.
+          onLook: () => println(`You see kitchen bench through the gate. It leads to kitchen.`)
 
-            if (woodtakenOrShown2) {
-              // the key is already in the pot or the player's inventory
-              return;
-            }
-
-            const secondStairs = getRoom('secondStairs');
-
-            // put the silver key in the pot
-            secondStairs.items.push({
-              name: 'wood',
-              onUse: () => {
-                const room = getRoom(disk.roomId);
-                if (room.id === 'bizimEv') {
-                  //name 'wood' olan nesnenin indeksini al
-                  const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
-                  //name 'wood' olan nesneyi sil
-                  if (woodIndex > -1){
-                    disk.inventory.splice(woodIndex, 1);
-                  };
-                  println(`You put the wood into fireplace.
-                  Now your home is warmer.`);
-                } else {
-                  println(`You can't use wood here.`);
-                  // this item can only be used once
-                };
-              },
-              desc: `It's a wood used in the empty house window.`,
-              onLook: () => {
-                const wood = getItemInInventory('wood') || getItemInRoom('wood');
-
-                // let's also update the description
-                wood.desc = `It will be enough for today if burned on fireplace.`;
-              },
-              isTakeable: true,
-              onTake: () => {
-                println(`You took it.`);
-                // update the monstera's description, removing everything starting at the line break
-                const windowOnEast = getItemInRoom('east window', 'secondStairs');
-                windowOnEast.desc = windowOnEast.desc.slice(0, windowOnEast.desc.indexOf('\n'));
-              },
-            });
-            woodtakenOrShown2 = true;
-
-          },
-          
         },
         {
-          name: ['stair','stairs'],
-          desc: 'It leads to the first floor.', // Displayed when the player looks at the item.
-          onUse: () => println(`Type GO DOWN to go downstairs.`), // Called when the player uses the item.
+          name: ['door','south'],
+          desc: 'It leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to exit.`), // Called when the player uses the item.
+        },
+        {
+          name: ['chest'],
+          desc: 'Looks old like most of the things in this village.', // Displayed when the player looks at the item.
+          onUse: () => println(`There is Television on it. First I will have to lift the tv to open the chest.`), // Called when the player uses the item.
         },
       ],
       exits: [
@@ -1594,9 +1510,111 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           id: 'path2',
         },
         {
-          dir: ['stairs', 'north'],
-          id: 'secondFloor',
+          dir: 'north',
+          id: 'kitchen',
         },
+      ],
+    },
+    {
+      id: 'kitchen',
+      name: 'Kitchen',
+      desc: `
+      There is a bench and sink.
+      On bench are some STUFF and FOOD.`,
+      items: [
+        {
+          name: ['stuff'],
+          desc: `Some unnecessary stuff.
+          
+          There is a FORK`,
+          onLook: () => {
+              if(forkSeen){
+              return
+            }
+            forkSeen = true;
+            const kitchen = getRoom('kitchen')
+            kitchen.items.push({
+              name: 'fork',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const forkIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('fork');
+                  //name 'wood' olan nesneyi sil
+                  if (forkIndex > -1){
+                    disk.inventory.splice(forkIndex, 1);
+                  };
+                  println(`You gave the fork.`);
+                  forkGiven = true;
+                } else {
+                  println(`You can't use fork here.`);
+                  // this item can only be used once
+                };
+              },
+              desc: `Stolen fork.`,
+              onLook: () => {
+                const fork = getItemInInventory('fork') || getItemInRoom('fork', 'kitchen');
+
+                // let's also update the description
+                fork.desc = `My mom will like this.`;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You stole it.`);
+                const stuff = getItemInRoom('stuff', 'kitchen')
+                stuff.desc.slice(0, stuff.desc.indexOf('\n'))
+                }
+            })
+          }
+        },
+        {
+          name: 'food',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  println(`"Mom" you said. "Look what I bought for you"
+                  "Oh that is great." she smiles like she missed meat a century.`)
+                  foodGiven = true;
+                  let isimler = ['food', 'grilled chops']
+                  for (let obj = 0; obj < disk.inventory.length; obj++){
+                    for (let isim = 0; isim < isimler.length; isim++ ){
+                      if (isimler[isim] === disk.inventory[obj].name){
+                        disk.inventory.splice(obj, 1)
+                      }
+                    }
+                  }
+                } else {
+                  println(`I won't eat them without my son.`);
+                  // remove the block
+                }
+              },
+              desc: `It's grilled chops!`,
+              onLook: () => {
+                const chops = getItemInInventory('food') || getItemInRoom('food', 'kitchen');
+                chops.name = "grilled chops";
+
+                // let's also update the description
+                chops.desc = `Looks and smells so delicious.`;
+                delete chops.onLook;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it.`);
+                const kitchen = getRoom('kitchen')
+                kitchen.desc = 'There is a bench and sink. On bench are some STUFF';
+              }
+        },
+        {
+          name: ['gate'],
+          desc: 'Gate to sitting room.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to get to the sitting room.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'grocerHouse',
+        }
       ],
     },
     {
@@ -1646,30 +1664,21 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
             desc: `Old door.
             
             It has some RUNES on it.`, // Displayed when the player looks at the item.
-            onUse: 'Type GO NORTH to exit.'
+            onUse: () => {
+              println(`Type GO NORTH to exit.`);
+            },
           },
           {
             name: ['bed'],
-            onUse: 'Better sleep at your own bed.'
+            onUse: () => {
+              println(`Better sleep in your bed.`);
+            },
           },
       ],
       exits: [
         {
-          dir: 'south',
-          id: 'oldLadyHouse',
-        },
-        {
           dir: 'north',
-          id: 'grocerHouse',
-          block: 'Door is closed and no one seems to be home',
-        },
-        {
-          dir: 'west',
-          id: 'path3',
-        },
-        {
-          dir: 'east',
-          id: 'path1',
+          id: 'path2',
         },
       ],
     },

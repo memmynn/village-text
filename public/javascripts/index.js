@@ -1,7 +1,7 @@
 // global properties, assigned with let for easy overriding by the user
 let disk;
 
-let tvOpen, woodtakenOrShown, 
+let forkGiven, forkSeen, tvOpen, woodtakenOrShown, 
   woodtakenOrShown1, 
   woodtakenOrShown2, 
   woodtakenOrShown3, 
