@@ -1696,7 +1696,6 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'north',
           id: 'grocery',
-          block: 'Door is closed and no one seems to be home',
         },
         {
           dir: 'west',
@@ -1705,6 +1704,64 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'east',
           id: 'path2',
+        },
+      ],
+    },
+    {      
+      id: 'grocery',
+      onEnter: () => {
+        const zafer = getCharacter("Zafer", getCharactersInRoom(disk.roomId)) !== undefined
+        if (!zafer) {
+          // Look at a character.
+          return
+        } 
+        println(`Zafer sits behind the desk.`)
+      },
+      name: 'Grocery',
+      desc : `Zafer's grocery. 
+      It has one door to SOUTH.
+      Another door to WEST.
+      There is a DESK, and behind the desk there is a SHELF.`,
+      items:[
+        {
+          name: ['desk'],
+          desc: 'It has a bullet mark on it.', // Displayed when the player looks at the item.
+        },
+        {
+          name: ['shelf'],
+          desc: `It has very few stuff on it.`, // Displayed when the player looks at the item.
+          onLook: () => {
+          const room = getRoom(disk.roomId);
+          const items = (room.items || []).filter(item => item.isTakeable); //odadaki takeable itemler
+        
+          if (!items.length) {
+            println(`There's nothing to take.`);
+            return;
+            }
+          }
+        },
+        {
+          name: ['south door'],
+          desc: `Old door with bullet marks on it.`, // Displayed when the player looks at the item.
+          onUse: () => {
+            println(`Type GO SOUTH to exit.`);
+          },
+        },
+        {
+          name: ['west door'],
+          onUse: () => {
+            println(`Type GO WEST to exit.`);
+          },
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'path3',
+        },
+        {
+          dir: 'east',
+          id: 'southPath',
         },
       ],
     },
@@ -1761,6 +1818,18 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     },
   ],
   characters: [
+    {
+      name: 'Zafer',
+      roomId: 'grocery',
+      desc: `She looks old and tired. 
+      You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
+      // optional callback, run when the player talks to this character
+      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      // things the player can discuss with the character
+      topics: [
+        
+      ],
+    },
     {
       name: ['Mother', 'mom', 'my mother', 'my mom', 'mommy', 'my mommy', 'mommie', 'my mommie'],
       roomId: 'bizimEv',
