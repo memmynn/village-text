@@ -1687,7 +1687,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       name: 'Path',
       desc: `It's the village path. On WEST and EAST direction. 
       [NORTH] of the path is grocery.
-      Other side of the path [SOUTH] is the meatball diner Melisa's house`,
+      Other side of the path [SOUTH] is Melisa's house`,
       exits: [
         {
           dir: 'south',
@@ -1704,6 +1704,81 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'east',
           id: 'path2',
+        },
+      ],
+    },
+    {      
+      id: 'melisaHouse',
+      onEnter: () => {
+        const melisa = getCharacter("Melisa", getCharactersInRoom(disk.roomId)) !== undefined
+        if (!melisa) {
+          // Look at a character.
+          return
+        } 
+        println(`Melisa is here.`)
+      },
+      name: 'Melisa\'s house',
+      desc : `A tiny sweet house. 
+      She was your wife's best friend when she was alive.
+      It has a DOOR to NORTH.
+      One WINDOW facing west.
+      A SOFA and a COFFEE TABLE.
+      On coffee table a PHOTO.
+      `,
+      items:[
+        {
+          name: ['door'],
+          desc: 'Leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println('Type GO NORTH to exit the house.')
+        },
+        {
+          name: ['window'],
+          desc: `Faces west.`, // Displayed when the player looks at the item.
+          onLook: () => {println('You can see the entrance to village through window.')
+            }
+        },
+        {
+          name: ['sofa'],
+          desc: `Comfortable. Your wife and Melisa used to sit and gossip.`, // Displayed when the player looks at the item.
+          onUse: () => {
+            println(`You sit on it.`);
+          },
+        },
+        {
+          name: ['coffee table'],
+          desc: `From Syria with ornoments. 
+          
+          There is a PHOTO on it`,
+          onUse: () => {
+            println(`You have nothing to put on the table.`);
+          },
+        },
+        {
+          name: ['photo'],
+          desc: `You and your wife with Melisa. All you smile. Your wife carries your baby.`,
+          onUse: () => {
+            println(`You looked at the photo for a little bit.`);
+          },
+          isTakeable: true,
+          onTake: () => {
+            const table = getItemInRoom('coffee table', 'melisaHouse')
+            table.desc = table.desc.slice(0, table.desc.indexOf('\n'));
+            println('You took the nice photo of yours.')
+          },
+          onLook: () => {
+            const photo = getItemInInventory('photo') || getItemInRoom('photo', 'melisaHouse');
+            photo.name = "your happy photo";
+
+            // let's also update the description
+            photo.desc = `It was an awesome moment. If only you could know what would happen next year.`;
+            delete photo.onLook;
+          },
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'path3',
         },
       ],
     },
@@ -1760,7 +1835,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           id: 'path3',
         },
         {
-          dir: 'east',
+          dir: 'west',
           id: 'southPath',
         },
       ],
@@ -1769,7 +1844,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       id: 'southPath',
       name: 'Path',
       desc: `It's the village path. On EAST, NORTH and SOUTH direction. 
-      On west is the bakery.`,
+      On west is the BAKERY. On NORTHEAST is the GROCERY.`,
       exits: [
         {
           dir: 'south',
@@ -1786,6 +1861,10 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'east',
           id: 'path3',
+        },
+        {
+          dir: 'northeast',
+          id: 'grocery',
         },
       ],
     },
@@ -1812,7 +1891,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'east',
           id: 'melisaHouse',
-          block: `Melisa's house. But you can't enter from here.`
+          block: `Melisa's house. You see a window on house's wall. But you can't enter from here.`
         },
       ],
     },
