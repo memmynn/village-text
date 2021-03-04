@@ -1869,6 +1869,102 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       ],
     },
     {
+      id: 'bakery',
+      onEnter: () => {
+        const fatma = getCharacter("Fatma", getCharactersInRoom(disk.roomId)) !== undefined
+        if (!fatma) {
+          // Look at a character.
+          return
+        } 
+        println(`Fatma stands behind the desk.`)
+      },
+      name: 'Bakery',
+      desc: `It is hot inside.
+      It smells fresh bakery and bread.
+      You can see the stone OVEN behind.
+      There is a DESK.
+      There is a SHELF for bread and bakery.
+      It has a DOOR to EAST`,
+      items:[
+        {
+          name: ['oven', 'stone oven'],
+          desc: 'There you can see some burning woods.', // Displayed when the player looks at the item.
+        },
+        {
+          name: ['desk'],
+          desc: 'It is ashy and floury.', // Displayed when the player looks at the item.
+        },
+        {
+          name: ['shelf'],
+          desc: `It has few stuff on it.`, // Displayed when the player looks at the item.
+          onLook: () => {
+          const room = getRoom(disk.roomId);
+          const items = (room.items || []).filter(item => item.isTakeable); //odadaki takeable itemler
+        
+          if (!items.length) {
+            println(`There's nothing to take.`);
+            return;
+            }
+          }
+        },
+        {
+          name: ['door', 'east door', 'door to east'],
+          desc: `Open door with bullet marks on it.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('door', 'bakery');
+              if(!doorClosed1){
+              println("You closed it. Type GO EAST to exit.")
+              doorClosed1 = true
+              door.desc = 'Closed.'
+              door.img = ` 
+   ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm` 
+            } else {
+              println("You opened it. Type GO NORTH to exit.")
+              doorClosed1 = false
+              door.desc = 'Open. You see the path.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+            
+          },
+      ],
+      exits: [
+        {
+          dir: 'east',
+          id: 'southPath',
+        },
+      ],
+    },
+    {
       id: 'southPath-1',
       name: 'Village entrance',
       desc: `It's the village entrance path. On NORTH and SOUTH direction. 
@@ -1897,6 +1993,18 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     },
   ],
   characters: [
+    {
+      name: 'Fatma',
+      roomId: 'bakery',
+      desc: `She looks old and tired. 
+      You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
+      // optional callback, run when the player talks to this character
+      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      // things the player can discuss with the character
+      topics: [
+        
+      ],
+    },
     {
       name: 'Zafer',
       roomId: 'grocery',
