@@ -8,7 +8,7 @@ const village = {
       name: 'Path',
       desc: `That goes to south.
       To west is tea house. North is the military base.
-      To east is butcher [Zafer].`,
+      To east is butcher [Mehmet].`,
       exits: [
         {
           dir: 'north',
@@ -25,6 +25,168 @@ const village = {
         {
           dir: 'east',
           id: 'butcher',
+        },
+      ],
+    },
+    {
+      id: 'butcher',
+      onEnter: () => {
+        const mehmet = getCharacter("Mehmet", getCharactersInRoom(disk.roomId)) !== undefined
+        if (!mehmet) {
+          println(`Mehmet is not here.`) // Look at a character.
+          return
+        } 
+        println(`Mehmet stands behind the display fridge.`)
+      },
+      name: 'Butcher',
+      desc: `Belongs to Mehmet.
+      You see a display FRIDGE.
+      It has one door to SOUTH.
+      Another door to WEST.`,
+      items:[
+        {
+          name: ['fridge', 'display fridge'],
+          desc: 'Some meat and chicken are displayed.', // Displayed when the player looks at the item.
+          onLook: () => {
+            const room = getRoom(disk.roomId);
+            const items = (room.items || []).filter(item => item.isTakeable); //odadaki takeable itemler
+          
+            if (!items.length) {
+              println(`There's nothing to take.`);
+              return;
+              }
+          }
+        },
+        {
+          name: ['west door'],
+          desc: `Door is open. You can see the path.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('west door', 'butcher');
+              if(!doorClosed3){
+              println("You closed it. Type GO WEST to exit.")
+              doorClosed3 = true
+              door.desc = 'Closed.'
+              door.img = ` 
+   ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm`
+            } else {
+              println("You opened it. Type GO WEST to exit.")
+              doorClosed3 = false
+              door.desc = 'Open. You see the path.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+        },
+        {
+          name: ['south door'],
+          desc: `Door is open.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('south door', 'butcher');
+              if(!doorClosed4){
+              println("You closed it. Type GO SOUTH to exit.")
+              doorClosed4 = true
+              door.desc = 'Closed.'
+              door.img = ` 
+   ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm`
+            } else {
+              println("You opened it. Type GO SOUTH to exit.")
+              doorClosed4 = false
+              door.desc = 'Open. You see the crossroad.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+            
+          }
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'northPath',
+        },
+        {
+          dir: 'west',
+          id: 'northPath+1',
+        },
+      ],
+    },
+    {
+      id: 'crossRoad',
+      name: 'Crossroad',
+      desc: `To north-south and east direction.
+      To west is meatball diner.`,
+      exits: [
+        {
+          dir: 'north',
+          id: "northPath+1",
+        },
+        {
+          dir: 'west',
+          id: "meatballDiner",
+        },
+        {
+          dir: 'east',
+          id: 'northPath',
+        },
+        {
+          dir: 'south',
+          id: 'southPath',
         },
       ],
     },
@@ -65,7 +227,7 @@ const village = {
         },
         {
           name: ['door', 'east door', 'door to east'],
-          desc: `Door open.`, // Displayed when the player looks at the item.
+          desc: `Door is open.`, // Displayed when the player looks at the item.
           onUse: () => {
               const door = getItemInRoom('door', 'meatballDiner');
               if(!doorClosed2){
@@ -87,7 +249,7 @@ const village = {
   | |           | |
   | |           | |
   | |           | |
-  |_|___________|_|  ejm` 
+  |_|___________|_|  ejm`
             } else {
               println("You opened it. Type GO EAST to exit.")
               doorClosed2 = false
@@ -122,38 +284,10 @@ const village = {
           dir: 'east',
           id: 'crossRoad',
         },
-      ],
-    },
-    {
-      id: 'crossRoad',
-      name: 'Crossroad',
-      desc: `To north-south and east direction.
-      To west is meatball diner. To southeast is grocery. There is butcher on northeast.`,
-      exits: [
-        {
-          dir: 'north',
-          id: "northPath+1",
-        },
-        {
-          dir: 'west',
-          id: "meatballDiner",
-        },
-        {
-          dir: 'south east',
-          id: "grocery",
-        },
-        {
-          dir: 'north east',
-          id: 'butcher',
-        },
-        {
-          dir: 'east',
-          id: 'northPath',
-        },
         {
           dir: 'south',
-          id: 'southPath',
-        },
+          id: 'northPath'
+        }
       ],
     },
     {
@@ -166,7 +300,7 @@ const village = {
       exits: [
         {
           dir: 'south',
-          id: "grocery",
+          id: "fatmaHouse",
         },
         {
           dir: 'north',
@@ -211,7 +345,7 @@ const village = {
     {
     id: 'northPath-2',
     name: 'Path',
-    desc: `Path to east and west. On south you see the house of butcher.
+    desc: `Path to east and west. On south you see the house of Mehmet [butcher].
     To the north is unemployed man's house. `,
 
     exits: [
