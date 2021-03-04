@@ -29,10 +29,106 @@ const village = {
       ],
     },
     {
+      id: 'meatballDiner',
+      onEnter: () => {
+        const ayşe = getCharacter("Ayşe", getCharactersInRoom(disk.roomId)) !== undefined
+        if (!ayşe) {
+          // Look at a character.
+          return
+        } 
+        println(`Ayşe stands behind the service bench.`)
+      },
+      name: 'Meatball Diner',
+      desc: `Ayşe's diner.
+      Smells delicious meatballs.
+      There is a BENCH for self service.
+      You can see the GRILL behind the bench.
+      There is one TABLE to sit and eat.
+      It has a DOOR to EAST`,
+      items:[
+        {
+          name: ['grill'],
+          desc: 'For grilling meatballs.', // Displayed when the player looks at the item.
+        },
+        {
+          name: 'bench',
+          desc: `It has few stuff on it.`, // Displayed when the player looks at the item.
+          onLook: () => {
+          const room = getRoom(disk.roomId);
+          const items = (room.items || []).filter(item => item.isTakeable); //odadaki takeable itemler
+        
+          if (!items.length) {
+            println(`There's nothing to take.`);
+            return;
+            }
+          }
+        },
+        {
+          name: ['door', 'east door', 'door to east'],
+          desc: `Door open.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('door', 'meatballDiner');
+              if(!doorClosed2){
+              println("You closed it. Type GO EAST to exit.")
+              doorClosed2 = true
+              door.desc = 'Closed.'
+              door.img = ` 
+   ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm` 
+            } else {
+              println("You opened it. Type GO EAST to exit.")
+              doorClosed2 = false
+              door.desc = 'Open. You see the crossroad.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+            
+          },
+        {
+          name: ['table '],
+          desc: 'For dining.', // Displayed when the player looks at the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'east',
+          id: 'crossRoad',
+        },
+      ],
+    },
+    {
       id: 'crossRoad',
       name: 'Crossroad',
       desc: `To north-south and east direction.
-      To west is meatball diner. To south east is grocery. There is butcher on north east.`,
+      To west is meatball diner. To southeast is grocery. There is butcher on northeast.`,
       exits: [
         {
           dir: 'north',
@@ -40,7 +136,7 @@ const village = {
         },
         {
           dir: 'west',
-          id: "diner",
+          id: "meatballDiner",
         },
         {
           dir: 'south east',
@@ -1933,7 +2029,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
   | |           | |
   |_|___________|_|  ejm` 
             } else {
-              println("You opened it. Type GO NORTH to exit.")
+              println("You opened it. Type GO EAST to exit.")
               doorClosed1 = false
               door.desc = 'Open. You see the path.'
               door.img = `______________
@@ -1993,6 +2089,18 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     },
   ],
   characters: [
+    {
+      name: 'Ayşe',
+      roomId: 'meatballDiner',
+      desc: `She looks old and tired. 
+      You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
+      // optional callback, run when the player talks to this character
+      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      // things the player can discuss with the character
+      topics: [
+        
+      ],
+    },
     {
       name: 'Fatma',
       roomId: 'bakery',
