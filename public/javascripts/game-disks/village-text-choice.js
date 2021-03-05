@@ -7,7 +7,7 @@ const village = {
       id: 'northPath+1',
       name: 'Path',
       desc: `That goes to south.
-      To west is tea house. North is the military base.
+      To west is tea house garden. North is the military base.
       To east is butcher [Mehmet].`,
       exits: [
         {
@@ -16,7 +16,7 @@ const village = {
         },
         {
           dir: 'west',
-          id: "teaHouse",
+          id: "teaHouseGarden",
         },
         {
           dir: 'south',
@@ -29,6 +29,107 @@ const village = {
       ],
     },
     {
+      id: 'teaHouseGarden',
+        onEnter: () => {
+          const cumhur = getCharacter("Cumhur", getCharactersInRoom(disk.roomId)) !== undefined
+          if (!cumhur) {
+            println('Owner [Cumhur] is not here.')
+            // Look at a character.
+            return
+          } 
+          println(`Owner [Cumhur] sits on SECOND TABLE near tea house door.`)
+          const secondTable = getItemInRoom('second table', 'teaHouseGarden').desc = 'Cumhur sits here.'
+        },
+      name: 'Tea House Garden',
+      desc: `
+      Entered from WEST GATE [entrance from path] or from NORTH DOOR [Tea house door].
+      There are three tables in this small garden.
+      FIRST TABLE next to WEST GATE, close to path.
+      SECOND TABLE next to NORTH DOOR [door to tea house]
+      THIRD TABLE in the middle of the garden.
+      You feel refreshed.
+      To NORTH you see the the Tea House.
+      `,
+      items:[
+        {
+          name: ['west gate'],
+          desc: 'You can see the village path through the gate.', // Displayed when the player looks at the item.
+        },
+        {
+          name: 'first table',
+          desc: `Near the garden gate on west.`, // Displayed when the player looks at the item.
+        },
+        {
+          name: 'second table',
+          desc: `Near the tea house door on north.`, // Displayed when the player looks at the item.
+        },
+        {
+          name: ['third table '],
+          desc: 'In the middle of tea house.', // Displayed when the player looks at the item.
+        },
+        {
+          name: ['tea house door','door', 'north door', 'door to north', 'door to tea house'],
+          desc: `Door is open. You see inside the tea house.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('tea house door', 'teaHouseGarden');
+              if(!teaHouseDoorClosed){
+              println("You closed it. Type GO NORTH to exit.")
+              teaHouseDoorClosed = true
+              door.desc = 'Closed.'
+              door.img = ` 
+  ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm`
+            } else {
+              println("You opened it. Type GO NORTH to exit.")
+              doorClosed2 = false
+              door.desc = 'Open. You see inside the tea house.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+            
+          },
+        
+      ],
+      exits: [
+        {
+          dir: 'east',
+          id: 'northPath+1',
+        },
+        {
+          dir: 'north',
+          id: 'teaHouse'
+        }
+      ],
+  },
+  {
       id: 'butcher',
       onEnter: () => {
         const mehmet = getCharacter("Mehmet", getCharactersInRoom(disk.roomId)) !== undefined
@@ -2223,6 +2324,18 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     },
   ],
   characters: [
+    {
+      name: 'Cumhur',
+      roomId: 'teaHouseGarden',
+      desc: `She looks old and tired. 
+      You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
+      // optional callback, run when the player talks to this character
+      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      // things the player can discuss with the character
+      topics: [
+        
+      ],
+    },
     {
       name: 'Ayşe',
       roomId: 'meatballDiner',
