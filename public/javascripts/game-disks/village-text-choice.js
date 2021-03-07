@@ -29,6 +29,113 @@ const village = {
       ],
     },
     {
+      id: 'teaHouse',
+        onEnter: () => {
+          const cumhur = getCharacter("Cumhur", getCharactersInRoom(disk.roomId)) !== undefined
+          if (!cumhur) {
+            println('Owner [Cumhur] is not here.')
+            // Look at a character.
+            return
+          } 
+          println(`Owner [Cumhur] sits behind BENCH.`)
+          const bench = getItemInRoom('bench', 'teaHouse').desc = 'Cumhur sits behind it.'
+        },
+      name: 'Tea House',
+      desc: `
+      Entered from DOOR [south].
+      There is a BENCH.
+      Behind bench there is a tea BOILER.
+      There are two tables in this small tea house.
+      FIRST TABLE near the door.
+      SECOND TABLE in the middle of tea house.
+      `,
+      items:[
+          {
+            name: 'bench',
+            desc: `It is used for tea service.`, // Displayed when the player looks at the item.
+            onLook: () => {
+            const room = getRoom(disk.roomId);
+            const items = (room.items || []).filter(item => item.isTakeable); //odadaki takeable itemler
+          
+            if (!items.length) {
+              println(`There's nothing to take.`);
+              return;
+              }
+            }
+          },
+          {
+          
+          name: ['door', 'south door', 'door to south', 'door to garden', 'garden door','tea house door'],
+          desc: `Door is open. You see the garden.`, // Displayed when the player looks at the item.
+          onUse: () => {
+              const door = getItemInRoom('tea house door', 'teaHouse');
+              if(!teaHouseDoorClosed){
+              println("You closed it. Type GO SOUTH to exit.")
+              teaHouseDoorClosed = true
+              door.desc = 'Closed.'
+              door.img = ` 
+  ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm`
+            } else {
+              println("You opened it. Type GO SOUTH to exit.")
+              doorClosed2 = false
+              door.desc = 'Open. You see the garden.'
+              door.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+            
+          },
+        {
+          name: 'first table',
+          desc: `Near the door. People sit here for drinking tea and gossip.`, // Displayed when the player looks at the item.
+          onUse: () => println('You sit')
+        },
+        {
+          name: 'second table',
+          desc: `In the middle of tea house.`, // Displayed when the player looks at the item.
+          onUse: () => println('You sit')
+        },
+        {
+          name: 'boiler',
+          desc: `You can hear the boiling tea.`, // Displayed when the player looks at the item.
+        },        
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'teaHouseGarden',
+        }
+      ],
+  },
+    {
       id: 'teaHouseGarden',
         onEnter: () => {
           const cumhur = getCharacter("Cumhur", getCharactersInRoom(disk.roomId)) !== undefined
@@ -65,7 +172,7 @@ const village = {
         },
         {
           name: ['third table '],
-          desc: 'In the middle of tea house.', // Displayed when the player looks at the item.
+          desc: 'In the middle of tea house garden.', // Displayed when the player looks at the item.
         },
         {
           name: ['tea house door','door', 'north door', 'door to north', 'door to tea house'],
@@ -2326,7 +2433,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
   characters: [
     {
       name: 'Cumhur',
-      roomId: 'teaHouseGarden',
+      roomId: 'teaHouse',
       desc: `She looks old and tired. 
       You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
       // optional callback, run when the player talks to this character
