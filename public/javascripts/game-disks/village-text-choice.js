@@ -48,6 +48,8 @@ const village = {
       There are two tables in this small tea house.
       FIRST TABLE near the door.
       SECOND TABLE in the middle of tea house.
+      Sided with two big windows. 
+      WEST WINDOW and EAST WINDOW
       `,
       items:[
           {
@@ -64,7 +66,18 @@ const village = {
             }
           },
           {
-          
+            name: 'west window',
+            desc: `Facing the west side.`, // Displayed when the player looks at the item.
+            onUse: () => println('Not possible to open.'),
+            onLook: () => println('You see the starting of the pine trees. Some dense and shadowy pine forest.')
+          },
+          {
+            name: 'east window',
+            desc: `Facing the east side.`, // Displayed when the player looks at the item.
+            onUse: () => println('Not possible to open.'),
+            onLook: () => println('There are soldiers around the base building.')
+          },
+          {
           name: ['door', 'south door', 'door to south', 'door to garden', 'garden door','tea house door'],
           desc: `Door is open. You see the garden.`, // Displayed when the player looks at the item.
           onUse: () => {
@@ -149,30 +162,34 @@ const village = {
         },
       name: 'Tea House Garden',
       desc: `
-      Entered from WEST GATE [entrance from path] or from NORTH DOOR [Tea house door].
+      Entered from EAST GATE [entrance from path] or from NORTH DOOR [Tea house door].
       There are three tables in this small garden.
       FIRST TABLE next to WEST GATE, close to path.
       SECOND TABLE next to NORTH DOOR [door to tea house]
       THIRD TABLE in the middle of the garden.
       You feel refreshed.
       To NORTH you see the the Tea House.
+      To west, you see the pine forest and mountains behind the garden wall.
       `,
       items:[
         {
-          name: ['west gate'],
+          name: ['east gate'],
           desc: 'You can see the village path through the gate.', // Displayed when the player looks at the item.
         },
         {
           name: 'first table',
           desc: `Near the garden gate on west.`, // Displayed when the player looks at the item.
+          onUse: () => println('You sit')
         },
         {
           name: 'second table',
           desc: `Near the tea house door on north.`, // Displayed when the player looks at the item.
+          onUse: () => println('You sit')
         },
         {
           name: ['third table '],
           desc: 'In the middle of tea house garden.', // Displayed when the player looks at the item.
+          onUse: () => println('You sit')
         },
         {
           name: ['tea house door','door', 'north door', 'door to north', 'door to tea house'],
@@ -233,7 +250,12 @@ const village = {
         {
           dir: 'north',
           id: 'teaHouse'
-        }
+        },
+        {
+          dir: 'south',
+          id: 'meatballDiner',
+          block: 'You can\'t enter the Meatball Diner from this side.'
+        },
       ],
   },
   {
