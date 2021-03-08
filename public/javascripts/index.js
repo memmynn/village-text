@@ -1,8 +1,8 @@
 // global properties, assigned with let for easy overriding by the user
 let disk;
 
-let forkGiven, forkSeen, tvOpen, woodtakenOrShown, zaferSeen, 
-  woodtakenOrShown1, 
+let forkGiven, forkSeen, tvOpen, woodtakenOrShown, zaferSeen, envelopeOpen, envelopeSeen, envelopeTaken, 
+  woodtakenOrShown1, knifeGiven, knifeSeen,
   woodtakenOrShown2, 
   woodtakenOrShown3, 
   letterTaken, 

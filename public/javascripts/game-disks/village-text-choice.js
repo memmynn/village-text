@@ -4,6 +4,17 @@ const village = {
   roomId: 'bizimEv', // Set this to the ID of the room you want the player to start in.
   rooms: [
     {
+      id: 'base',
+      name: 'Military Base',
+      desc: ``,
+      exits: [
+        {
+          dir: 'south',
+          id: "northPath+1",
+        }
+      ],
+    },
+    {
       id: 'northPath+1',
       name: 'Path',
       desc: `That goes to south.
@@ -13,6 +24,7 @@ const village = {
         {
           dir: 'north',
           id: "base",
+          block: `"Stop!" says the soldier.`
         },
         {
           dir: 'west',
@@ -514,10 +526,6 @@ const village = {
           dir: 'east',
           id: 'crossRoad',
         },
-        {
-          dir: 'south',
-          id: 'northPath'
-        }
       ],
     },
     {
@@ -547,10 +555,219 @@ const village = {
       ],
     },
     {
+      id: 'erenHouse',
+      name: 'Eren\'s House',
+      desc: `Mud-brick.
+      It has a GATE to NORTH.
+      A DOOR to SOUTH.
+      A SOFA and a TABLE.
+      You and Eren, the owner of this house didn't get on well.
+      No window on this house. So it is dark.`,
+      items: [
+        {
+          name: 'sofa',
+          desc: 'It is an ordinary, wooden sofa.', // Displayed when the player looks at the item.
+          onUse: () => println(`You sit on it.`), // Called when the player uses the item.
+        },
+        {
+          name: 'table',
+          desc: `Placed in front of the sofa, made of pine.
+
+          There is an ENVELOPE on the table`, // Displayed when the player looks at the item.
+          onLook: () => {
+            if (envelopeSeen || envelopeTaken) {
+              // the key is already in the pot or the player's inventory
+              return;
+            }
+            envelopeSeen = true;
+            const erenHouse = getRoom('erenHouse');
+            // put the silver key in the pot
+            erenHouse.items.push({
+              name: 'envelope',
+              desc: `It reads "SECRET DON'T OPEN!"`,
+
+              onUse: () => {
+                  println(`You opened the envelope.`);
+                  // remove the block
+                  envelopeOpen = true;
+                },
+              onLook: () => {
+                if(envelopeOpen){
+                const envelope = getItemInInventory('envelope') || getItemInRoom('envelope', 'erenHouse');
+                
+
+                // let's also update the description
+                envelope.desc = `
+                It reads:
+                "Dear Eren,
+                
+                Thank you for your helps during the invasion.
+                
+                Find your reward in the village entrance to South.
+                
+                All the best,
+                Commander"`;
+                }
+                delete envelope.onLook;
+              },
+              onRead: () => {
+                if(envelopeOpen){
+                  println`
+                Dear Eren,
+                
+                Thank you for your helps during the invasion.
+                
+                Find your reward in the village entrance to South.
+                
+                All the best,
+                Commander`;
+                } else{
+                println(`SECRET DON'T OPEN!`)
+                }
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it.`);
+                envelopeTaken = true
+                // update the monstera's description, removing everything starting at the line break
+                const table = getItemInRoom('table', 'erenHouse')
+                table.desc = table.desc.slice(0, table.desc.indexOf('\n'));
+              }
+            })
+          },
+        },          
+        {
+          name: ['gate', 'north'],
+          desc: `A doorless gate to another room.`, // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH.`), // Called when the player uses the item.
+          onLook: () => println(`You see kitchen bench through the gate. It leads to kitchen.`)
+
+        },
+        {
+          name: ['door','south'],
+          desc: 'It leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to exit.`), // Called when the player uses the item.
+        },
+        
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'northPath-1',
+        },
+        {
+          dir: 'north',
+          id: 'erenKitchen',
+        },
+      ],
+    },
+    {
+      id: 'erenKitchen',
+      name: 'Kitchen',
+      desc: `
+      There is a bench.
+      On bench are some STUFF and FOOD.`,
+      items: [
+        {
+          name: ['stuff'],
+          desc: `Some unnecessary stuff.
+          
+          There is a KNIFE`,
+          onLook: () => {
+              if(knifeSeen){
+              return
+            }
+            knifeSeen = true;
+            const kitchen = getRoom('erenKitchen')
+            kitchen.items.push({
+              name: 'knife',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const knifeIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('knife');
+                  //name 'wood' olan nesneyi sil
+                  if (knifeIndex > -1){
+                    disk.inventory.splice(knifeIndex, 1);
+                  };
+                  println(`You gave the knife.`);
+                  knifeGiven = true;
+                } else {
+                  println(`You can't use knife here.`);
+                  // this item can only be used once
+                };
+              },
+              desc: `Stolen knife.`,
+              onLook: () => {
+                const knife = getItemInInventory('knife') || getItemInRoom('knife', 'erenKitchen');
+
+                // let's also update the description
+                knife.desc = `My mom may use this for chopping vegetables.`;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You stole it.`);
+                const stuff = getItemInRoom('stuff', 'erenKitchen')
+                stuff.desc.slice(0, stuff.desc.indexOf('\n'))
+                }
+            })
+          }
+        },
+        {
+          name: 'food',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  println(`"Mom" you said. "Look what I bought for you"
+                  "Oh that is great." she smiles like she missed meat for a thousand years.`)
+                  foodGiven = true;
+                  let isimler = ['food', 'roasted chicken']
+                  for (let obj = 0; obj < disk.inventory.length; obj++){
+                    for (let isim = 0; isim < isimler.length; isim++ ){
+                      if (isimler[isim] === disk.inventory[obj].name){
+                        disk.inventory.splice(obj, 1)
+                      }
+                    }
+                  }
+                } else {
+                  println(`I won't eat them without my son.`);
+                  // remove the block
+                }
+              },
+              desc: `It's roasted chicken!`,
+              onLook: () => {
+                const roastedChicken = getItemInInventory('food') || getItemInRoom('food', 'erenKitchen');
+                roastedChicken.name = "roasted chicken";
+
+                // let's also update the description
+                roastedChicken.desc = `Looks and smells so tasty.`;
+                delete roastedChicken.onLook;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it.`);
+                const kitchen = getRoom('erenKitchen')
+                kitchen.desc = 'There is a bench and sink. On bench are some STUFF';
+              }
+        },
+        {
+          name: ['gate'],
+          desc: 'Gate to other room.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH to get to the sitting room.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'erenHouse',
+        }
+      ],
+    },
+    {
       id: 'northPath-1',
       name: 'Path',
       desc: `Path to east and west.
-      To the north is buthcher Eren's house.
+      To the north is Eren's house (you don't quite like Eren).
       On south is a two-storey house. No one lives there. `,
   
       exits: [
