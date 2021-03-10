@@ -2,8 +2,8 @@
 let disk;
 
 let forkGiven, forkSeen, tvOpen, woodtakenOrShown, zaferSeen, envelopeOpen, envelopeSeen, envelopeTaken, 
-  woodtakenOrShown1, knifeGiven, knifeSeen, noteSeen, woodShown,
-  woodtakenOrShown2, 
+  woodtakenOrShown1, knifeGiven, knifeSeen, noteSeen, woodShown, windowClosed,
+  woodtakenOrShown2, plateSeen, plateGiven, 
   woodtakenOrShown3, 
   letterTaken, 
   letterShown, 

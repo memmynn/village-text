@@ -555,6 +555,185 @@ const village = {
       ],
     },
     {
+      id: 'fatmaHouse',
+      name: 'Fatma\'s House',
+      desc: `Made of mudbrick. Light comes from the window.
+      A DOOR to NORTH.
+      A GATE to SOUTH.
+      A CHEST in corner of the room.
+      A WINDOW to WEST.
+      You know Fatma is a good person. During invasion she gave you some flour.`,
+      items: [
+        {
+          name: ['window'],
+          desc: `Open. You see the crossroad.`, // Displayed when the player looks at the item.
+          onUse: () => {
+            const window = getItemInRoom('window', 'fatmaHouse');
+            if(!windowClosed){
+              println("You closed it.")
+              windowClosed = true
+              window.desc = 'Closed.'
+              window.img = ` 
+   ______________
+  |\\ ___________ /|
+  | |  _ _ _ _  | |
+  | | | | | | | | |
+  | | |-+-+-+-| | |
+  | | |-+-+=+%| | |
+  | | |_|_|_|_| | |
+  | |    ___    | |
+  | |   [___] ()| |
+  | |         ||| |
+  | |         ()| |
+  | |           | |
+  | |           | |
+  | |           | |
+  |_|___________|_|  ejm` 
+            } else {
+              println("You opened it. Fresh air fills the room.")
+              windowClosed = false
+              window.desc = 'Open. You see the crossroad.'
+              window.img = `______________
+  |\\ ___________ /|
+  | |  /|,| |   | |
+  | | |,x,| |   | |
+  | | |,x,' |   | |
+  | | |,x   ,   | |
+  | | |/    |%==| |
+  | |    /] ,   | |
+  | |   [/ ()   | |
+  | |       |   | |
+  | |       |   | |
+  | |       |   | |
+  | |      ,'   | |
+  | |   ,'      | |
+  |_|,'_________|_| ejm`;
+                }
+                return
+              },
+           
+        }, // Called when the player uses the item.          
+        {
+          name: ['door','north'],
+          desc: 'It leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to exit.`), // Called when the player uses the item.
+        },
+        {
+          name: ['gate', 'south'],
+          desc: `A doorless gate to another room.`, // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH.`), // Called when the player uses the item.
+          onLook: () => println(`You see kitchen bench through the gate. It leads to kitchen.`)
+
+        },
+
+        {
+          name: ['chest'],
+          desc: 'Looks old like most of the things in this village.', // Displayed when the player looks at the item.
+          onUse: () => println(`Locked. You need a key.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'northPath',
+        },
+        {
+          dir: 'south',
+          id: 'fatmaKitchen',
+        },
+      ],
+    },
+    {
+      id: 'fatmaKitchen',
+      name: 'Kitchen',
+      desc: `
+      There is a bench and sink.
+      On bench are some STUFF and FLOUR.`,
+      items: [
+        {
+          name: ['stuff'],
+          desc: `Some unnecessary stuff.
+          
+          There is a PLATE`,
+          onLook: () => {
+            if(plateSeen){
+              return
+            };
+            plateSeen = true;
+            const kitchen = getRoom('fatmaKitchen');
+            kitchen.items.push({
+              name: 'plate',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  //name 'wood' olan nesnenin indeksini al
+                  const plateIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('plate');
+                  //name 'wood' olan nesneyi sil
+                  if (plateIndex > -1){
+                    disk.inventory.splice(plateIndex, 1);
+                  };
+                  println(`You gave the plate.`);
+                  plateGiven = true;
+                } else {
+                  println(`You can't use plate here.`);
+                  // this item can only be used once
+                };
+              },
+              desc: `A beautiful porcelain plate.`,
+              onLook: () => {
+                const plate = getItemInInventory('plate') || getItemInRoom('plate', 'fatmaKitchen');
+
+                // let's also update the description
+                plate.desc = `My mom will like this plate.`;
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You took it for a better purpose.`);
+                const stuff = getItemInRoom('stuff', 'fatmaKitchen')
+                stuff.desc='Some unnecessary stuff, missing a plate.'
+              },
+            })
+          }
+        },
+        {
+          name: 'flour',
+              onUse: () => {
+                const room = getRoom(disk.roomId);
+                if (room.id === 'bizimEv') {
+                  println(`"Mom" you said. "Look what I bought for you"
+                  "Oh that is great. I will cook bread with it." she smiles like sunshine.`)
+                  flourGiven = true;
+                  const flourIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('flour');
+                  //name 'wood' olan nesneyi sil
+                  if (flourIndex > -1){
+                    disk.inventory.splice(flourIndex, 1);
+                  }
+                } else {
+                  println(`Tastes like dust. I think mom can make use of it.`);
+                  // remove the block
+                }
+              },
+              isTakeable: true,
+              onTake: () => {
+                println(`You burrowed it.`);
+                const kitchen = getRoom('fatmaKitchen')
+                kitchen.desc = 'There is a bench and sink. On bench are some STUFF';
+              }
+        },
+        {
+          name: ['gate'],
+          desc: 'Gate to other room.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to get to the other room.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'fatmaHouse',
+        }
+      ],
+    },
+    {
       id: 'erenHouse',
       name: 'Eren\'s House',
       desc: `Mud-brick.
@@ -1655,7 +1834,7 @@ const village = {
       items: [
         {
           name: ['bed'],
-          onUse: () => println(`Better sleep in my own bed.`),
+          onUse: () => println(`Better sleep in your own bed.`),
         },
         {
           name: ['chest'],
