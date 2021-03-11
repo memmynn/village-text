@@ -1143,16 +1143,16 @@ const village = {
       id: 'graveYardEntrance',
       name: 'Graveyard Entrance',
       desc: `It has long walls.
-      A WALKWAY to EAST and WEST.
+      A WALKWAY to WEST.
       To SOUTH is the GATE to exit.
       There are some GRAVE STONEs here and there.`,
       items: [
         {
           name: 'first grave stone',
-          desc: `Mustafa
+          desc: `"Mustafa
           Husband of Fatma
           May he rest in peace.
-          Died: 2031`,
+          Died: 2031"`,
           img: `
   .=gp.
  .'/$$$$
@@ -1175,10 +1175,10 @@ const village = {
         },
         {
             name: 'second grave stone',
-            desc: `Hüseyin
+            desc: `"Hüseyin
             Husband of Aliye
             May he rest in peace.
-            Died: 2031`,
+            Died: 2031"`,
             img: `
     .=gp.
    .'/$$$$
@@ -1201,10 +1201,10 @@ const village = {
           },
           {
             name: 'third grave stone',
-            desc: `Aliye
+            desc: `"Aliye
             Wife of Hüseyin
             May she rest in peace.
-            Died: 2031`,
+            Died: 2031"`,
             img: `
     .=gp.
    .'/$$$$
@@ -1267,7 +1267,223 @@ const village = {
         },
         {
           dir: 'east',
-          id: 'graveEast',
+          id: 'mountain',
+          block: `There is wall at east.`
+        },
+      ],
+    },
+    {
+      id: 'graveWest',
+      name: 'Graveyard (West Side)',
+      desc: `Here is more GRAVE STONEs than entrance.
+      This is the end of the graveyard. 
+      To North, West and South is graveyard walls.
+      A WALKWAY to EAST.`,
+      items: [
+        {
+          name: 'first grave stone',
+          desc: `"Metin
+          Never married.
+          Died when 18.
+          May he rest in peace.
+          Died: 2031"`,
+          img: `
+  .=gp.
+ .'/$$$$
+ || "TP"
+ ||          .:
+ ||       .-' |
+ ||    .-'    |
+ ||    |      !____
+ ||    |   .-'  .-'
+ ||    '.____.-'(
+ ||     |  /  /__.
+ ||      )(
+|::|    /__i           fsc
+|::|
+          `,
+          onLook: () => {
+          const firstStone = getItemInRoom('first', 'graveWest');
+          firstStone.name = "Metin's Grave Stone";           
+          }
+        },
+        {
+            name: 'second grave stone',
+            desc: `"Seda
+            Wife of Emin, mother of Ahmet.
+            May she rest in peace.
+            Died: 2032"
+            This is where your beloved wife rests.`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const secondStone = getItemInRoom('second', 'graveWest');
+            secondStone.name = "Your wife's Grave Stone";           
+            },
+          },
+          {
+            name: 'third grave stone',
+            desc: `Ömer-Faruk
+            Our beloved son. Died during the invasion.
+            May he rest in peace.
+            Died: 2031`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const thirdStone = getItemInRoom('third', 'graveWest');
+            thirdStone.name = "Ömer Faruk's Grave Stone";           
+            },
+          },
+          {
+            name: 'fourth grave stone',
+            desc: `Aleyna
+            You will always be loved and missed.
+            May you find peace.
+            Died: 2032`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const fourthStone = getItemInRoom('fourth', 'graveWest');
+            fourthStone.name = "Aleyna's Grave Stone";           
+            },
+          },
+          {
+            name: 'fifth grave stone (old grave stone)',
+            desc: `"Melda
+            We miss you mom.
+            Died when she was 68.
+            May she rest in peace.
+            Died: 2023"`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const firstStone = getItemInRoom('fifth', 'graveWest');
+            firstStone.name = "Melda's Grave Stone";           
+            }
+          },
+          {
+              name: 'sixth grave stone',
+              desc: `"Grannie Fatma
+              Mother of Melisa and Ufuk.
+              May she rest in peace.
+              Died: 2028"
+              This is where mother of Melisa [YOUR WIFE'S BEST FRIEND] rests.`,
+              img: `
+      .=gp.
+     .'/$$$$
+     || "TP"
+     ||          .:
+     ||       .-' |
+     ||    .-'    |
+     ||    |      !____
+     ||    |   .-'  .-'
+     ||    '.____.-'(
+     ||     |  /  /__.
+     ||      )(
+    |::|    /__i           fsc
+    |::|
+              `,
+              onLook: () => {
+              const secondStone = getItemInRoom('sixth', 'graveWest');
+              secondStone.name = "Grannie Fatma's Grave Stone [Mother of your wife's best friend]";           
+              },
+            },
+            {
+              name: 'seventh grave stone',
+              desc: `Not quite readable.`,
+              img: `
+      .=gp.
+     .'/$$$$
+     || "TP"
+     ||          .:
+     ||       .-' |
+     ||    .-'    |
+     ||    |      !____
+     ||    |   .-'  .-'
+     ||    '.____.-'(
+     ||     |  /  /__.
+     ||      )(
+    |::|    /__i           fsc
+    |::|
+              `,
+              onLook: () => {
+              const thirdStone = getItemInRoom('seventh', 'graveWest');
+              thirdStone.name = "Unreadable Grave Stone";           
+              },
+            },
+            
+      ],
+      exits: [
+        {
+          dir: 'east',
+          id: "graveYardEntrance",
+        },
+        {
+          dir: 'north',
+          id: 'mountain',
+          block: `There is wall at north.`
+        },
+        {
+          dir: 'west',
+          id: 'mountain',
+          block: `There is wall at west.`
+        },
+        {
+          dir: 'south',
+          id: 'mountain',
+          block: `There is wall at south. Behind wall, you see the unemployed man's house.`
         },
       ],
     },
