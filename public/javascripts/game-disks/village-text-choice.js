@@ -1115,6 +1115,93 @@ const village = {
       ],
     },
     {
+      id: 'unempHouse',
+      name: 'Unemployed man\'s house',
+      desc: `A warm village house of two rooms. 
+      There is a sofa, a BASKET, some clothings here and there and a FIREPLACE.
+      A DOOR to his bedroom [north].
+      He came here last year. Couldn't find a job for so long. 
+      Sometimes collects woods from the forest and sells them, like you.`,
+      items: [
+        {
+          name: ['basket'],
+          desc: 'Plastic. Filled with clothes. (To check whether he has a coat type USE BASKET)', // Displayed when the player looks at the item.
+          
+          onUse: () => {
+            const basket = getItemInRoom('basket', 'unempHouse');
+            if (!coatGiven){
+              basket.desc = `You checked it. There are some clothes but no coat. He may feel cold without one.`;
+            }else{
+              basket.desc = `You checked it. There you see the coat. You feel at ease. He won't feel cold.`
+              };
+              println(basket.desc)
+            },
+        },
+        {
+          name: ['fireplace','fire'],
+          desc: 'Extinguished fireplace. He seems to have no wood. Maybe I bring one.', // Displayed when the player looks at the item.
+          onUse: () => {
+            let wood = getItemInInventory('wood');
+            if (!wood){
+              return println("You have no wood to fire it.");
+            } else {
+              const fireplace = getItemInRoom('fireplace', 'unempHouse');
+                // let's also update the description
+                println('You placed wood near fireplace.')
+                fireplace.desc = `Extinguished fireplace. There seems to have enough wood for today. 
+                Maybe some good people put them...`;
+                const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('wood');
+            //name 'wood' olan nesneyi sil
+            if (woodIndex > -1){
+              disk.inventory.splice(woodIndex, 1);
+            };
+            woodGivenToUnemp = true;
+            }
+
+          },
+        },
+        {
+          name: 'door',
+          desc: 'Door to bedroom.', // Displayed when the player looks at the item.
+          onUse: () => println('Type GO TO NORTH, to enter try entering the bedroom.')
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'northPath-2',
+        },
+        {
+          dir: ['north','door','bedroom'],
+          id: 'unempBed',
+        },
+      ],
+    },
+    {
+      id: 'unempBed',
+      name: 'Bedroom',
+      desc: `This is a dark room with no windows. 
+      There is a BED on the ground. 
+      DOOR leading to exit.`,
+      items: [
+        {
+          name: ['bed'],
+          onUse: () => println(`Better sleep in your own bed.`),
+        },
+        {
+          name: 'door',
+          desc: 'Door to exit.', // Displayed when the player looks at the item.
+          onUse: () => println('Type GO SOUTH, to enter try quitting the bedroom.')
+        },
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: 'unempHouse',
+        }
+      ],
+    },
+    {
     id: 'northPath-2',
     name: 'Path',
     desc: `Path to east and west. On south you see the house of Mehmet [butcher].
@@ -1586,7 +1673,16 @@ const village = {
             };
             println(`You put the wood on fire. This will keep the home warm.`);
             woodGiven = true;
-          } else {
+          } else if (room.id === 'unempHouse') {
+            //name 'wood' olan nesnenin indeksini al
+            const woodIndex = disk.inventory.map(function(e) {return e.name;}).indexOf('Wood');
+            //name 'wood' olan nesneyi sil
+            if (woodIndex > -1){
+              disk.inventory.splice(woodIndex, 1);
+            };
+            println(`You put the wood near fireplace. Hope he will keep warm.`);
+            woodGivenToUnemp = true;
+          }else {
             println(`Better bring home. Mom will burn it in the fireplace.`);
             // this item can only be used once
             };

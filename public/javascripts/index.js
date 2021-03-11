@@ -7,7 +7,7 @@ let forkGiven, forkSeen, tvOpen, woodtakenOrShown, zaferSeen, envelopeOpen, enve
   woodtakenOrShown3, 
   letterTaken, 
   letterShown, 
-  woodGiven, 
+  woodGiven, woodGivenToUnemp, coatGiven,
   foodGiven, doorClosed, doorClosed1, doorClosed2, doorClosed3, doorClosed4, teaHouseDoorClosed, kofteSeen, kofteTaken;
 
 // store user input history
