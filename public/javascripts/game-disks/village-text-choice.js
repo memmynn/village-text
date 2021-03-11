@@ -1139,6 +1139,138 @@ const village = {
       },
     ],
   },
+  {
+      id: 'graveYardEntrance',
+      name: 'Graveyard Entrance',
+      desc: `It has long walls.
+      A WALKWAY to EAST and WEST.
+      To SOUTH is the GATE to exit.
+      There are some GRAVE STONEs here and there.`,
+      items: [
+        {
+          name: 'first grave stone',
+          desc: `Mustafa
+          Husband of Fatma
+          May he rest in peace.
+          Died: 2031`,
+          img: `
+  .=gp.
+ .'/$$$$
+ || "TP"
+ ||          .:
+ ||       .-' |
+ ||    .-'    |
+ ||    |      !____
+ ||    |   .-'  .-'
+ ||    '.____.-'(
+ ||     |  /  /__.
+ ||      )(
+|::|    /__i           fsc
+|::|
+          `,
+          onLook: () => {
+          const firstStone = getItemInRoom('first', 'graveYardEntrance');
+          firstStone.name = "Hasan's Grave Stone";           
+          }
+        },
+        {
+            name: 'second grave stone',
+            desc: `Hüseyin
+            Husband of Aliye
+            May he rest in peace.
+            Died: 2031`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const secondStone = getItemInRoom('second', 'graveYardEntrance');
+            secondStone.name = "Hüseyin's Grave Stone";           
+            },
+          },
+          {
+            name: 'third grave stone',
+            desc: `Aliye
+            Wife of Hüseyin
+            May she rest in peace.
+            Died: 2031`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const thirdStone = getItemInRoom('third', 'graveYardEntrance');
+            thirdStone.name = "Aliye's Grave Stone";           
+            },
+          },
+          {
+            name: 'fourth grave stone',
+            desc: `Not quite readable.`,
+            img: `
+    .=gp.
+   .'/$$$$
+   || "TP"
+   ||          .:
+   ||       .-' |
+   ||    .-'    |
+   ||    |      !____
+   ||    |   .-'  .-'
+   ||    '.____.-'(
+   ||     |  /  /__.
+   ||      )(
+  |::|    /__i           fsc
+  |::|
+            `,
+            onLook: () => {
+            const fourthStone = getItemInRoom('fourth', 'graveYardEntrance');
+            fourthStone.name = "Unreadable Grave Stone";           
+            },
+          },
+          
+        
+      ],
+      exits: [
+        {
+          dir: 'south',
+          id: "northPath-3",
+        },
+        {
+          dir: 'north',
+          id: 'mountain',
+          block: `There is wall at north.`
+        },
+        {
+          dir: 'west',
+          id: 'graveWest',
+        },
+        {
+          dir: 'east',
+          id: 'graveEast',
+        },
+      ],
+    },
     {
       id: 'northPath-3',
       name: 'Path',
@@ -1153,7 +1285,7 @@ const village = {
         },
         {
           dir: 'north',
-          id: 'graveYard',
+          id: 'graveYardEntrance',
         },
         {
           dir: 'west',
@@ -1168,7 +1300,10 @@ const village = {
     {
       id: 'park',
       name: 'Park',
-      desc: 'There is a BENCH',
+      desc: `To SOUTH is carpentry.
+      To EAST is woods.
+      On WEST is a path.
+      There is a BENCH.`,
       items: [
         {
           name: 'Bench',
