@@ -1227,6 +1227,63 @@ const village = {
     ],
   },
   {
+    id: 'butcherHouse', // Unique identifier for this room. Entering a room will set the disk's roomId to this.
+    name: 'Butcher\'s [Mehmet] House', // Displayed each time the player enters the room.
+    desc: `This is a one room village house like your home. 
+    There is a FIREPLACE. 
+    Mehmet the butcher lives here. He used to be rich but after invasion most if not all of his cattle has been claimed by the Commander. Now he serves mostly for the Military Base, selling for very cheap.
+    There is a door on the NORTH.`, // Displayed when the player first enters the room.
+    items: [
+      {
+        name: 'door',
+        desc: 'It leads NORTH.', // Displayed when the player looks at the item.
+        onUse: () => println(`Type GO NORTH to try the door.`), // Called when the player uses the item.
+      },
+      {
+        name: 'bed', // The player can refer to this item by either name. The game will use the first name.
+        desc: `Near the fireplace. Who sleeps here would feel quite comfortable.`,
+        onUse: () => println("Sleeping other people's bed is inappropriate."),
+      },
+      {
+        name: 'fireplace',
+        img:`________________________________________
+ [________________________________________]
+   ||_|_||_|_|_|_|_|_|_|_|_|_|_|_|_|_|_||
+   |_|_|_|  |                  |  |_|_|_|
+   ||_|_||  |                  |  ||_|_||
+   |_|_|_|  |                  |  |_|_|_|
+   ||_|_||  |                  |  ||_|_||
+   |_|_|_|  |                  |  |_|_|_|
+   ||_|_||  |                  |  ||_|_||
+   |_|_|_|  |                  |  |_|_|_|
+   ||_|_|| /_)_,)___),_)'_)__(_ \\ ||_|_||
+_____lc|_|_|/)______)_____)______( \\|_|_|_|_____
+""""/______________________________________\\""""
+"""[________________________________________]""""
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""`,
+        desc: `It is not burning so it is cold here.`,
+        //isTakeable: true, // Allows the player to take the item.
+        onUse: () => {
+          let wood = getItemInInventory('wood');
+          if (!wood){
+            println("You have no wood to put.");
+            return
+          }else{
+            println("You had better keep your woods for your child and mom.")
+          };
+        },
+      }
+    ],
+    exits: [
+      {
+        dir: 'north', // "dir" can be anything. If it's north, the player will type "go north" to get to the room called "A Forest Clearing".
+        id: 'northPath-2',
+      },
+    ],
+  },
+  {
       id: 'graveYardEntrance',
       name: 'Graveyard Entrance',
       desc: `It has long walls.
