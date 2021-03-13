@@ -1584,7 +1584,7 @@ const village = {
       exits: [
         {
           dir: 'south',
-          id: "carpenter's house",
+          id: "carpenterHouse",
         },
         {
           dir: 'north',
@@ -1598,6 +1598,94 @@ const village = {
           dir: 'east',
           id: 'park',
         },
+      ],
+    },
+    {
+      id: 'carpenterHouse',
+      name: 'Carpenter\'s [Yusuf] House',
+      desc: `Mostly wooden.
+      A GATE to SOUTH.
+      A DOOR to NORTH.
+      A TELEVISION on table.
+      No window on this house. So it is dark.
+      Carpenter has moved here after the invasion. You and village people don't quite like him. He serves the military base.`,
+      items: [
+        {
+            name: ['television', 'tv' ],
+            img: `______________
+| /~~~~~~~~ ||||
+||          |..|
+||          |  |
+| ________ / O |
+~~~~~~~~~~~~~~~ `,
+            desc: `         
+            An old TV. State provides them to legal sellers. Nowadays no one has television except a lucky minority.`, // Displayed when the player looks at the item.
+            onUse: () => {
+              
+              if(tvOpen1){
+                println('You turned off the television');
+                tvOpen1 = false;
+                return;
+              };
+              tvOpen1 = true;
+              return println("You turned on the TV. Channel 1. This is the only channel since two years. Full of government propaganda.");
+            },          
+        },
+        {
+          name: ['gate', 'south'],
+          desc: `A doorless gate to another room.`, // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO SOUTH.`), // Called when the player uses the item.
+          onLook: () => println(`You see the bedroom through the gate. It leads to bedroom.`)
+
+        },
+        {
+          name: ['door','north'],
+          desc: 'It leads to exit.', // Displayed when the player looks at the item.
+          onUse: () => println(`Type GO NORTH to exit.`), // Called when the player uses the item.
+        },
+        {
+          name: ['table'],
+          desc: 'Looks very stylish. Probably the carpenter carved it for himself.', // Displayed when the player looks at the item.
+          onUse: () => println(`There is Television on it. Also you can't use it.`), // Called when the player uses the item.
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'northPath-3',
+        },
+        {
+          dir: 'south',
+          id: 'carpenterBedroom',
+        },
+      ],
+    },
+    {
+      id: 'carpenterBedroom',
+      name: 'Carpenter Yusuf\'s Bedroom',
+      desc: `This is a dark room with no windows. Good for sleeping.
+      There is a BED and a coffee table. 
+      GATE leading to house entrance room.`,
+      items: [
+        {
+          name: ['bed'],
+          onUse: () => println(`Better sleep in your own bed.`),
+        },
+        {
+          name: ['coffee table'],
+          onUse: () => println('You don\'t have coffee to put on it.') 
+        },
+        {
+          name: 'gate',
+          desc: 'Gate to entrance.', // Displayed when the player looks at the item.
+          onUse: () => println('Type GO NORTH, to return the entrance.')
+        },
+      ],
+      exits: [
+        {
+          dir: 'north',
+          id: 'carpenterHouse',
+        }
       ],
     },
     {
@@ -2950,7 +3038,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           name: ['chest'],
           desc: 'Looks old like most of the things in this village.', // Displayed when the player looks at the item.
-          onUse: () => println(`There is Television on it. First I will have to lift the tv to open the chest.`), // Called when the player uses the item.
+          onUse: () => println(`There is Television on it. First you will have to lift the tv to open the chest.`), // Called when the player uses the item.
         },
       ],
       exits: [
