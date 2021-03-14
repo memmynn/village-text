@@ -3673,13 +3673,67 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
     {
       name: 'Fatma',
       roomId: 'bakery',
-      desc: `She looks old and tired. 
-      You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
+      desc: `She is a chubby and lovely lady in thirties.`, // printed when the player looks at the character
       // optional callback, run when the player talks to this character
-      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      onTalk: () => println(`"Hi there!" she says.`),
       // things the player can discuss with the character
       topics: [
-        
+        {
+          option: `**HELLO**.`,
+          onSelected() {
+            println(`Hello Fatma.`)
+            },
+            line: `How can I help you Emin?`,
+          removeOnRead: true,
+        },
+        {
+          option: `Tell me about **MILITARY BASE**`,
+          line: `It was the school building once. I dislike the soldiers.`,
+          prereqs: ['hello'],
+          removeOnRead: true,
+        },
+        {
+          option: `Tell me about **INVASION**`,
+          line: `I provided food to village people during the invasion...`,
+          prereqs: ['hello'],
+          removeOnRead: true,
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `He is a tyrant.`,
+          prereqs: ['hello'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `A soldier slapped your child in the face. Your wife shouted at the soldier.`,
+          prereqs: ['hello'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `You can find something there to sell maybe.
+          I will give you one bread for a wood. `,
+          prereqs: ['hello']
+        },
+        {
+          option: `How are your **SALES**?`,
+          line: `Fine, fine. I sell bread to the military base for higher prices...`,
+          prereqs: ['hello'],
+          removeOnRead: true,
+        },
+        {
+          option: `Who is the **UNEMPLOYED** man?`,
+          line: `He is a lost soul. Experienced a bad event like most of us. I give him bread for free.`,
+          prereqs: ['hello'],
+          removeOnRead: true,
+        },
+        {
+          option: `How can I **HELP** him?`,
+          line: `He needs to feel warm. You can bring him a coat and some woods`,
+          prereqs: ['hello', 'unemployed'],
+          removeOnRead: true,
+        },           
       ],
     },
     {
@@ -3718,6 +3772,12 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           line: `You can find some berries and woods in the forest.
           I will give you two bread for a handful of berries and one bread for two woods. `,
           prereqs: ['hello']
+        },
+        {
+          option: `How is doing the **GROCERY**?`,
+          line: `Well not bad at all. I can make my life outta here...`,
+          prereqs: ['hello'],
+          removeOnRead: true,
         },
       ],
     },
@@ -3780,6 +3840,146 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           option: `Let's talk about **FOREST**`,
           line: `You can find wood in the forest.`,
           prereqs: ['dead']
+        },
+      ],
+    },
+    {
+      name: 'soldier',
+      img: `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@@@@@@@@@@@@@@.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@@@*   #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  %@@@@@@@@@@@@@@  ,  @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@#    @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@     @@.@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@  @@@@@@@@   @  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@( / #@@  @@@@@     .@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@   &*%(/@@@@@@@@@@@@@*  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@  *    @ @@@@@@@@@@@, @@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@   @/, @@@@@@@@@@@@@ #  #  & %@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@ . @@@@@@@@@@@@@*       ,     @@  @@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@#@@@#  @@@.  @(@@@@@@@@@@@@ @#@        %@ &*  @@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@/     @@@@@@@@@@@@@  @ @@@@@@@/@@  @@  @@@@@@% @@   @@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@ .@@@@@@@@@@@@@@@@@@@@@@@@@@/@@@@@@@@@@@@@@ &@/@@@@.   @@@@@@@@@@@
+      @@@@@@@@@@@*,  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@/&.@@ * @@@@@@@@@@
+      @@@@@@@@@@@ . @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@% @@@@@@@ @ @ @@@@@@@@@@
+      @@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%  @@@@@@@@@#(  @@@@@@@@@
+      @@@@@@@@@  @ @@@@@@@@@@@@@@@@@@@.&@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@    @@@@@@@@
+      @@@@@@@    , @@@@@@@@@@@@@@@@@@@@@@@*& @@@@@@@@@@@@@@@@  /@@@@@@@@@@@ .((@@@@@@@
+      @@@@( @@( # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@ * @@@@@@@@@@@ .@ @@@@@@@
+      @@@@@@@@@@@@ ( @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@ * @@@@@@@@@@@  @  @@@@@@
+      @@@.@   * @@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@*, @@@@@ &@@@@@@@@@@@@@ @ @@@@@@
+      @@       @@@@@@@@@@ /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @  &@@@@@@@@@@@@@@/ @@@@@@
+      @@     @@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @   @@ *@@@@@@@@  @@@@@
+      @@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@,.@  @ @@@@@@@ % @@@@
+      @@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #@@@@@@@@@@@    . @@@@@  ,*@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ *@@@@@@@@@@&%  @@@@@% @@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@( @@@@@@@. @  @(%@@@
+      @@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@ %., @@@@`,
+      desc: [`Tall.`, `He looks cool. Like a robot cool.`, `"Does this guy has a choice?" you ask when you look at him.`],
+      roomId: 'crossRoad',
+      onTalk: () => println(`"Hi sir!" you say.`),
+      topics: [
+        {
+          option: `Can I **ASK** you something?`,
+          onSelected() {
+            println(`"What?" he says.`)
+            },
+          removeOnRead: true,
+        },
+        {
+          option: `Tell me about this **PATH**`,
+          line: `Nothing to talk about this path.`,
+          prereqs: ['ask'],
+          removeOnRead: true,
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `Stop asking silly questions?`,
+          prereqs: ['ask'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `I'm not allowed to talk about it!`,
+          prereqs: ['ask'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `You can go around the forest villager.`,
+          prereqs: ['ask']
+        },
+      ],
+    },
+    {
+      name: 'soldier',
+      img: `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@@@@@@@@@@@@@@.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@@@@*   #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  %@@@@@@@@@@@@@@  ,  @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@#    @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@     @@.@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@  @@@@@@@@   @  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@( / #@@  @@@@@     .@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@   &*%(/@@@@@@@@@@@@@*  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@  *    @ @@@@@@@@@@@, @@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@   @/, @@@@@@@@@@@@@ #  #  & %@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@ . @@@@@@@@@@@@@*       ,     @@  @@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@#@@@#  @@@.  @(@@@@@@@@@@@@ @#@        %@ &*  @@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@/     @@@@@@@@@@@@@  @ @@@@@@@/@@  @@  @@@@@@% @@   @@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@ .@@@@@@@@@@@@@@@@@@@@@@@@@@/@@@@@@@@@@@@@@ &@/@@@@.   @@@@@@@@@@@
+      @@@@@@@@@@@*,  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@/&.@@ * @@@@@@@@@@
+      @@@@@@@@@@@ . @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@% @@@@@@@ @ @ @@@@@@@@@@
+      @@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%  @@@@@@@@@#(  @@@@@@@@@
+      @@@@@@@@@  @ @@@@@@@@@@@@@@@@@@@.&@@@@@@@@@@@@@@@@@@@@@   @@@@@@@@@@    @@@@@@@@
+      @@@@@@@    , @@@@@@@@@@@@@@@@@@@@@@@*& @@@@@@@@@@@@@@@@  /@@@@@@@@@@@ .((@@@@@@@
+      @@@@( @@( # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@ * @@@@@@@@@@@ .@ @@@@@@@
+      @@@@@@@@@@@@ ( @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@ * @@@@@@@@@@@  @  @@@@@@
+      @@@.@   * @@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@*, @@@@@ &@@@@@@@@@@@@@ @ @@@@@@
+      @@       @@@@@@@@@@ /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  @  &@@@@@@@@@@@@@@/ @@@@@@
+      @@     @@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @   @@ *@@@@@@@@  @@@@@
+      @@   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@,.@  @ @@@@@@@ % @@@@
+      @@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #@@@@@@@@@@@    . @@@@@  ,*@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ *@@@@@@@@@@&%  @@@@@% @@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@( @@@@@@@. @  @(%@@@
+      @@@@@@@@@@@@@@@@@@@@@* ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@ %., @@@@`,
+      desc: [`Tall.`, `He looks cool. Like a robot cool.`, `"Does this guy has a choice?" you ask when you look at him.`],
+      roomId: 'road',
+      onTalk: () => println(`"Hi sir!" you say.`),
+      topics: [
+        {
+          option: `Can I **ASK** you something?`,
+          onSelected() {
+            println(`"What?" he says.`)
+            },
+          removeOnRead: true,
+        },
+        {
+          option: `Tell me about this **ROAD**`,
+          line: `Road to Mugla City.`,
+          prereqs: ['ask'],
+          removeOnRead: true,
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `Why are you asking silly questions?`,
+          prereqs: ['ask'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `Bad things happen. Long live the Army!`,
+          prereqs: ['ask'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `People are allowed to forest but we are not allowed.`,
+          prereqs: ['ask']
         },
       ],
     },
