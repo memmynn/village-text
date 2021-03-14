@@ -161,6 +161,9 @@ let lookAt = (args) => {
     const character = getCharacter(name, getCharactersInRoom(disk.roomId));
     if (character) {
       // Look at a character.
+      if (character.img){
+        println(character.img, 'img');
+      }
       if (character.desc) {
         println(character.desc);
       } else {
