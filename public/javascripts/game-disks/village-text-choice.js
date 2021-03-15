@@ -2733,7 +2733,8 @@ __   ___| | | __ _  __ _  ___
             ; '/__\\,.--';|   |[] .-.| O{ _ }
             :' |  | []  -|   ''--:.;[,.'\\,/
             '  |[]|,.--'' '',   ''-,.    |
-              ..    ..-''    ;       ''. ' A game by Memmynn`, 'img');
+              ..    ..-''    ;       ''. ' 
+                          A game by Memmynn`, 'img');
           room.name = 'Home'
           room.desc = `This is a one room village house. 
           You hear the crackling of the FIREPLACE. 
