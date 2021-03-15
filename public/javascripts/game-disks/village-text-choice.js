@@ -2709,12 +2709,41 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
     },
     {
       id: 'bizimEv', // Unique identifier for this room. Entering a room will set the disk's roomId to this.
-      name: 'Home', // Displayed each time the player enters the room.
-      desc: `This is a one room village house. 
-      You hear the crackling of the FIREPLACE. 
-      You live with your MOTHER and your SON here. 
-      There is a door on the NORTH. 
-      Type ITEMS to see what is here.`, // Displayed when the player first enters the room.
+       // Displayed each time the player enters the room.
+      // Displayed when the player first enters the room.
+      onEnter: () => {
+        const room = getRoom('bizimEv');
+
+        if (room.visits === 1) {
+          println(`       _ _ _                  
+      (_) | |                 
+__   ___| | | __ _  __ _  ___ 
+\\ \\ / / | | |/ _\` |/ _\` |/ _ \\
+ \\ V /| | | | (_| | (_| |  __/
+  \\_/ |_|_|_|\\__,_|\\__, |\\___|
+                    __/ |     
+                   |___/      
+                   ~         ~~          __
+                   _T      .,,.    ~--~ ^^
+             ^^   // \\                    ~
+                  ][O]    ^^      ,-~ ~
+               /''-I_I         _II____
+            __/_  /   \\ ______/ ''   /'\\_,__
+              | II--'''' \\,--:--..,_/,.-{ },
+            ; '/__\\,.--';|   |[] .-.| O{ _ }
+            :' |  | []  -|   ''--:.;[,.'\\,/
+            '  |[]|,.--'' '',   ''-,.    |
+              ..    ..-''    ;       ''. ' A game by Memmynn`, 'img');
+          room.name = 'Home'
+          room.desc = `This is a one room village house. 
+          You hear the crackling of the FIREPLACE. 
+          You live with your MOTHER and your SON here. 
+          There is a door on the NORTH. 
+          Type ITEMS to see what is here.`;
+          println(room.name)
+          println(room.desc)
+        }
+      },
       items: [
         {
           name: 'door',
@@ -3837,38 +3866,22 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           option: `I **LOVE** you too mom. Do you need anything?`,
           removeOnRead: true,
           onSelected() {
-            println(`"Bring some food and wood sonnie."`)
+            println(`"Bring some food and wood sonnie." she says.`)
+            // add a special item to the player's inventory
+          },
+        },
+        {
+          option: `**OKAY**`,
+          removeOnRead: true,
+          prereqs: ['love'],
+          onSelected() {
             // add a special item to the player's inventory
             disk.quests.push({
               name: 'bring wood & food to home',
             });
             println(`NEW QUEST!`)
           },
-        },
-        {
-          option: `Tell me about **INVASION**`,
-          line: `It was two years ago. Really bad times...`,
-          prereqs: ['dead'],
-          removeOnRead: true,
-        },
-        {
-          option: `Let's talk about **COMMANDER**`,
-          line: `He is the commander of village's military base.
-          During invasion, so many died in the village.`,
-          prereqs: ['dead'],
-          removeOnRead: true
-        },
-        {
-          option: `What happened during the **ACCIDENT**`,
-          line: `Your wife died during the accident.`,
-          prereqs: ['dead'],
-          removeOnRead: true
-        },
-        {
-          option: `Let's talk about **FOREST**`,
-          line: `You can find wood in the forest.`,
-          prereqs: ['dead']
-        },
+        }
       ],
     },
     {
@@ -3876,40 +3889,19 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       roomId: 'bizimEv',
       desc: `Your son of 5 years. 
       He looks weaker than before.`,
-      onTalk: () => println(`"I'm hungry dad." he says. 
-      And you know that is true.`),
+      onTalk: () => println(`"I'm hungry dad." he says.`),
       topics: [
         {
-          option: `I wish you were **DEAD** during accident.`,
-          onSelected() {
-            println(`"HAHAHAH!" you both laugh.`)
-            },
+          option: `I will get you tasty **FOOD**.`,
+          line: `"Oh really! I would love to eat some roasted chicken!"`,
           removeOnRead: true,
         },
         {
-          option: `Tell me about **INVASION**`,
-          line: `It was two years ago. Really bad times...`,
-          prereqs: ['dead'],
-          removeOnRead: true,
-        },
-        {
-          option: `Let's talk about **COMMANDER**`,
-          line: `He is the commander of village's military base.
-          During invasion, so many died in the village.`,
-          prereqs: ['dead'],
+          option: `I **LOVE** you son.`,
+          line: `"I love you daddy!" his eyes shine.`,
+          prereqs: ['food'],
           removeOnRead: true
-        },
-        {
-          option: `What happened during the **ACCIDENT**`,
-          line: `Your wife died during the accident.`,
-          prereqs: ['dead'],
-          removeOnRead: true
-        },
-        {
-          option: `Let's talk about **FOREST**`,
-          line: `You can find wood in the forest.`,
-          prereqs: ['dead']
-        },
+        }
       ],
     },
     {
