@@ -32,7 +32,7 @@ const village = {
       items:[
         {
           name: 'butcher shop',
-          img: `        |____________________________|
+          img: `          |____________________________|
           |____________________________|
           | ________   _____________   |
           |=|##||##|== |##|##|##|##|  =|
@@ -3830,10 +3830,45 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       desc: `She looks old and tired. 
       You know she is tired especially since last year after the accident.`, // printed when the player looks at the character
       // optional callback, run when the player talks to this character
-      onTalk: () => println(`"Bring some food and wood sonnie."`),
+      onTalk: () => println(`"I love you my son." she says.`),
       // things the player can discuss with the character
       topics: [
-        
+        {
+          option: `I **LOVE** you too mom. Do you need anything?`,
+          removeOnRead: true,
+          onSelected() {
+            println(`"Bring some food and wood sonnie."`)
+            // add a special item to the player's inventory
+            disk.quests.push({
+              name: 'bring wood & food to home',
+            });
+            println(`NEW QUEST!`)
+          },
+        },
+        {
+          option: `Tell me about **INVASION**`,
+          line: `It was two years ago. Really bad times...`,
+          prereqs: ['dead'],
+          removeOnRead: true,
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `He is the commander of village's military base.
+          During invasion, so many died in the village.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `Your wife died during the accident.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `You can find wood in the forest.`,
+          prereqs: ['dead']
+        },
       ],
     },
     {
@@ -3844,7 +3879,37 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
       onTalk: () => println(`"I'm hungry dad." he says. 
       And you know that is true.`),
       topics: [
-        
+        {
+          option: `I wish you were **DEAD** during accident.`,
+          onSelected() {
+            println(`"HAHAHAH!" you both laugh.`)
+            },
+          removeOnRead: true,
+        },
+        {
+          option: `Tell me about **INVASION**`,
+          line: `It was two years ago. Really bad times...`,
+          prereqs: ['dead'],
+          removeOnRead: true,
+        },
+        {
+          option: `Let's talk about **COMMANDER**`,
+          line: `He is the commander of village's military base.
+          During invasion, so many died in the village.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `What happened during the **ACCIDENT**`,
+          line: `Your wife died during the accident.`,
+          prereqs: ['dead'],
+          removeOnRead: true
+        },
+        {
+          option: `Let's talk about **FOREST**`,
+          line: `You can find wood in the forest.`,
+          prereqs: ['dead']
+        },
       ],
     },
     {

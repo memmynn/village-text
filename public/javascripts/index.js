@@ -1,6 +1,7 @@
 // global properties, assigned with let for easy overriding by the user
 let disk;
 
+
 let forkGiven, forkSeen, tvOpen, woodtakenOrShown, zaferSeen, envelopeOpen, envelopeSeen, envelopeTaken, 
   woodtakenOrShown1, knifeGiven, knifeSeen, noteSeen, woodShown, windowClosed,
   woodtakenOrShown2, plateSeen, plateGiven, 
@@ -32,6 +33,10 @@ let init = (disk) => {
 
   if (!initializedDisk.inventory) {
     initializedDisk.inventory = [];
+  }
+  
+  if (!initializedDisk.quests) {
+    initializedDisk.quests = [];
   }
 
   if (!initializedDisk.characters) {
@@ -422,6 +427,42 @@ let read = () => {
   });
 };
 
+//list readable items in room
+let quest = () => {
+  if (!disk.quests.length) {
+    println(`There's no quest.`);
+    return;
+  }
+
+  println(`Current quests are:`);
+  disk.quests.forEach((q) => {
+    println(`${bullet} ${getName(q.name)}`)
+  });
+};
+// use the item with the given name
+// string -> nothing
+let liftItem = (itemName) => {
+  const item = getItemInRoom(itemName, disk.roomId);
+
+  if (!item) {
+    println(`There is no ${itemName} here.`);
+    return;
+  }
+
+  if (!item.onLift) {
+    println(`You can't lift ${itemName}.`);
+    return;
+  }
+
+  println(`You lifted ${itemName}`)
+  // use item and give it a reference to the game
+  if (typeof item.onLift === 'string') {
+    const lift = eval(item.onLift);
+    lift({disk, println, getRoom, enterRoom, item});
+  } else if (typeof item.onLift === 'function') {
+    item.onLift({disk, println, getRoom, enterRoom, item});
+  }
+};
 // use the item with the given name
 // string -> nothing
 let readItem = (itemName) => {
@@ -563,11 +604,14 @@ let help = () => {
   const instructions = `The following commands are available:
     LOOK:   'look at key'
     TAKE:   'take book'
+    READ:   'read book'
+    LIFT:   'lift stone'
     GO:     'go north'
     USE:    'use door'
     TALK:   'talk to mary'
     ITEMS:  list items in the room
     INV:    list inventory items
+    QUEST:  list quests
     SAVE:   save the current game
     LOAD:   load the last saved game
     HELP:   this help menu
@@ -599,6 +643,8 @@ let commands = [
     i: inv, // shortcut for inventory
     look,
     l: look, // shortcut for look
+    quest,
+    q: quest,
     go,
     n,
     s,
@@ -630,6 +676,7 @@ let commands = [
     get: takeItem,
     use: useItem,
     read: readItem,
+    lift: liftItem,
     say: sayString,
     save: x => save(x),
     load: x => load(x),
