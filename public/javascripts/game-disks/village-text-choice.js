@@ -26,9 +26,10 @@ const village = {
     |LI LI LI LI||LI||LI||LI||LI LI LI LI|
  ,,;;,;;;,;;;,;;;,;;;,;;;,;;;,;;,;;;,;;;,;;,,
 ;;jgs;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;`,
-      desc: `That goes to south.
-      To west is TEA HOUSE GARDEN. North is the MILITARY BASE.
-      To east is BUTCHER SHOP [Mehmet].`,
+      desc: `North is the MILITARY BASE
+      To west is TEA HOUSE GARDEN. .
+      To east is BUTCHER SHOP [Mehmet].
+      Path goes to south`,
       items:[
         {
           name: 'butcher shop',
@@ -39,7 +40,7 @@ const village = {
           |=|##||##| ==|##|##|##|##| ==|
           |=|==++==|= =|==+==+==+==|  =|
           |=|,-""-.| = | .^. | .^. | ==|
-          |=||    || ==|/   \|/   \|  =|
+          |=||    || ==|/   \\|/   \\|  =|
           |=||    ||= _|)___(|)___(|_==|
           |=||o   || "---------------"=|
           |=||    ||==    ===    =   ==|
@@ -49,7 +50,7 @@ const village = {
           {
             name: 'tea house garden',
             desc: `It is where people gather and gossip while drinking tea.`, // Displayed when the player looks at the item.
-            img: `                                    _________________
+            img: `                                 _________________
             _                     /\\                \`.
           _( )                   /  \\                 \`._             _ _
          ( (  )                .__.'                     \`-._        ( ( )
@@ -3878,7 +3879,12 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           onSelected() {
             // add a special item to the player's inventory
             disk.quests.push({
-              name: 'bring wood & food to home',
+              name : 'bring wood & food to home',
+              condition: () => {
+                if(foodGiven && woodGiven){
+                  questEnd(name)
+                }
+              }
             });
             println(`NEW QUEST!`)
           },

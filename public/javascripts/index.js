@@ -439,6 +439,16 @@ let quest = () => {
     println(`${bullet} ${getName(q.name)}`)
   });
 };
+
+//let getQuestInLog = (name) => disk.quests.find(quest => objectHasName(quest, name));
+
+// take the item with the given name
+// string -> nothing
+let questEnd = (questName) => {
+  const findQuest = q => objectHasName(q, questName);
+  const questIndex = disk.quests.findIndex(findQuest);
+  disk.quests.splice(questIndex, 1);
+  };
 // use the item with the given name
 // string -> nothing
 let liftItem = (itemName) => {
@@ -563,9 +573,9 @@ let useItem = (itemName) => {
   // use item and give it a reference to the game
   if (typeof item.onUse === 'string') {
     const use = eval(item.onUse);
-    use({disk, println, getRoom, enterRoom, item});
+    use({disk, println, getRoom, enterRoom, item, questEnd});
   } else if (typeof item.onUse === 'function') {
-    item.onUse({disk, println, getRoom, enterRoom, item});
+    item.onUse({disk, println, getRoom, enterRoom, item, questEnd});
   }
 };
 
