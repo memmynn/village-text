@@ -1954,6 +1954,9 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
                   println(`You put the wood into fireplace.
                   Now your home is warmer.`);
                   woodGiven = true;
+                  if(foodGiven){
+                    questEnd('bring wood & food to home')
+                  }
                 } else {
                   println(`You can't use wood here.`);
                   // this item can only be used once
@@ -3030,6 +3033,9 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
                   println(`You put the wood into fireplace.
                   Now your home is warmer.`);
                   woodGiven = true;
+                  if(foodGiven){
+                    questEnd('bring wood & food to home')
+                  }
                 } else {
                   println(`You can't use wood here.`);
                   // this item can only be used once
@@ -3879,12 +3885,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           onSelected() {
             // add a special item to the player's inventory
             disk.quests.push({
-              name : 'bring wood & food to home',
-              condition: () => {
-                if(foodGiven && woodGiven){
-                  questEnd(name)
-                }
-              }
+              name : 'bring wood & food to home',              
             });
             println(`NEW QUEST!`)
           },
