@@ -1354,17 +1354,17 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
           Husband of Fatma
           May he rest in peace.
           Died: 2031"`,
-          img: `           _____/      \\\\_____
-          |  _     ___   _   ||
+          img: `           _____/       \\\\_____
+          |  _     ___   _    ||
           | | \\     |   | \\  ||
-          | |  |    |   |  | ||
-          | |_/     |   |_/  ||
+          | |  |    |   |  |  ||
+          | |_/     |   |_/   ||
           | | \\     |   |    ||
           | |  \\    |   |    ||
           | |   \\. _|_. | .  ||
-          |                  ||
-          |  name goes here  ||
-          |                  ||
+          |      Mustafa      ||
+          | Husband of Fatma  ||
+          |    Died: 2031     ||
   *       | *   **    * **   |**      **
    \\))ejm97/.,(//,,..,,\\||(,,.,\\\\,.((//
 `,
@@ -1377,7 +1377,6 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
             name: 'second grave stone',
             desc: `"Hüseyin
             Husband of Aliye
-            May he rest in peace.
             Died: 2031"`,
             img: `           _____/      \\\\_____
           |  _     ___   _   ||
@@ -1387,9 +1386,9 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
           | | \\     |   |    ||
           | |  \\    |   |    ||
           | |   \\. _|_. | .  ||
-          |                  ||
-          |  name goes here  ||
-          |                  ||
+          |      Hüseyin     ||
+          | Husband of Aliye ||
+          |    Died: 2031    ||
   *       | *   **    * **   |**      **
    \\))ejm97/.,(//,,..,,\\||(,,.,\\\\,.((//
 `,
@@ -1412,9 +1411,9 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
           | | \\     |   |    ||
           | |  \\    |   |    ||
           | |   \\. _|_. | .  ||
-          |                  ||
-          |  name goes here  ||
-          |                  ||
+          |       Aliye      ||
+          |  Wife of Hüseyin ||
+          |     Died: 2031   ||
   *       | *   **    * **   |**      **
    \\))ejm97/.,(//,,..,,\\||(,,.,\\\\,.((//
 `,
@@ -1426,19 +1425,22 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
           {
             name: 'fourth grave stone',
             desc: `Not quite readable.`,
-            img: `           _____/      \\\\_____
-          |  _     ___   _   ||
-          | | \\     |   | \\  ||
-          | |  |    |   |  | ||
-          | |_/     |   |_/  ||
-          | | \\     |   |    ||
-          | |  \\    |   |    ||
-          | |   \\. _|_. | .  ||
-          |                  ||
-          |  name goes here  ||
-          |                  ||
-  *       | *   **    * **   |**      **
-   \\))ejm97/.,(//,,..,,\\||(,,.,\\\\,.((//
+            img: `              __.....__
+            .'         ':,
+           /  __  _  __  \\\\
+           | |_)) || |_))||
+           | | \\\\ || |   ||
+           |             ||   _,
+           |             ||.-(_{}
+           |             |/    \`
+           |        ,_ (\\;|/)
+         \\\\|       {}_)-,||\`
+         \\\\;/,,;;;;;;;,\\|//,
+        .;;;;;;;;;;;;;;;;,
+       \\,;;;;;;;;;;;;;;;;,//
+      \\\\;;;;;;;;;;;;;;;;,//
+     ,\';;;;;;;;;;;;;;;;'
+    jgs;;;;;;;;;;;'''\`
 `,
             onLook: () => {
             const fourthStone = getItemInRoom('fourth', 'graveYardEntrance');
@@ -2160,7 +2162,7 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
       items: [
         {
           name: ['Rotten vegetable','vegetable', 'eggplant', 'rotten', 'aubergine'],
-          desc: 'Mildly rotten. Still edible.', // Displayed when the player looks at the item.
+          desc: 'Mildly rotten eggplant. Still edible.', // Displayed when the player looks at the item.
           onUse: () => {const room = getRoom(disk.roomId);
           if (room.id === 'bizimEv') {
             //name 'wood' olan nesnenin indeksini al
@@ -2397,7 +2399,6 @@ _( )_            |_|_|\\ ,/        \\ \\//|_|_|            _( )_
       id: 'road',
       name: 'Road to city',
       desc: `It's asphalt. On EAST direction. 
-      To EAST you see the road to city.
       To WEST is path to village.
       Mountain on [NORTH] and [SOUTH].
       SOLDIER in front of you.`,
@@ -2757,7 +2758,7 @@ __   ___| | | __ _  __ _  ___
         },
         {
           name: 'bed', // The player can refer to this item by either name. The game will use the first name.
-          desc: `There is a bed next toe wall. You sleep there.`,
+          desc: `There is a bed next the wall. You sleep there.`,
           onUse: () => {if(woodGiven && foodGiven){
             println("Now your home is warm and your son is full. You can go to sleep.");
             return
@@ -2771,12 +2772,12 @@ __   ___| | | __ _  __ _  ___
    [________________________________________]
      ||_|_||_|_|_|_|_|_|_|_|_|_|_|_|_|_|_||
      |_|_|_|  |                  |  |_|_|_|
-     ||_|_||  |         )'       |  ||_|_||
-     |_|_|_|  |       ),  )      |  |_|_|_|
-     ||_|_||  |     ,  ) , )     |  ||_|_||
-     |_|_|_|  |    (  ( , ) ,    |  |_|_|_|
-     ||_|_||  |   , ,' ) ( , )   |  ||_|_||
-     |_|_|_|  | _)' , ( '   (__ _|  |_|_|_|
+     ||_|_||  |                  |  ||_|_||
+     |_|_|_|  |                  |  |_|_|_|
+     ||_|_||  |                  |  ||_|_||
+     |_|_|_|  |                  |  |_|_|_|
+     ||_|_||  |                  |  ||_|_||
+     |_|_|_|  |                  |  |_|_|_|
      ||_|_|| /_)_,)___),_)'_)__(_ \\ ||_|_||
 _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
 """"/______________________________________\\""""
@@ -2798,6 +2799,8 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
         {
           dir: 'north', // "dir" can be anything. If it's north, the player will type "go north" to get to the room called "A Forest Clearing".
           id: 'path',
+          block: `Your mom says: "Where do you go son?"
+          She has things to TALK before you leave.`
         },
       ],
     },
@@ -3874,7 +3877,7 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           option: `I **LOVE** you too mom. Do you need anything?`,
           removeOnRead: true,
           onSelected() {
-            println(`"Bring some food and wood sonnie." she says.`)
+            println(`"The home needs to be warm. Also he looks hungry." she says.`)
             // add a special item to the player's inventory
           },
         },
@@ -3885,9 +3888,15 @@ _____lc|_|_|/)______)_____)______( \\|_|_|_|_____
           onSelected() {
             // add a special item to the player's inventory
             disk.quests.push({
-              name : 'bring wood & food to home',              
+              name : 'keep the home warm',              
             });
-            println(`NEW QUEST!`)
+            println(`NEW QUEST!`);
+            disk.quests.push({
+              name : 'keep the boy full',              
+            });
+            const room = getRoom('bizimEv');
+            const exit = getExit('north', room.exits);
+            delete exit.block;
           },
         }
       ],

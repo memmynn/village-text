@@ -573,9 +573,9 @@ let useItem = (itemName) => {
   // use item and give it a reference to the game
   if (typeof item.onUse === 'string') {
     const use = eval(item.onUse);
-    use({disk, println, getRoom, enterRoom, item, questEnd});
+    use({disk, println, getRoom, enterRoom, item});
   } else if (typeof item.onUse === 'function') {
-    item.onUse({disk, println, getRoom, enterRoom, item, questEnd});
+    item.onUse({disk, println, getRoom, enterRoom, item});
   }
 };
 
